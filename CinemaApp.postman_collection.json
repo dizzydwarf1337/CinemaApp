@@ -1,0 +1,549 @@
+{
+	"info": {
+		"_postman_id": "d3de57f9-bc49-4d38-b544-4998ef233e74",
+		"name": "CinemaApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30674734"
+	},
+	"item": [
+		{
+			"name": "Cinema",
+			"item": [
+				{
+					"name": "GetCinemasAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Cinema",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Cinema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCinemaByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Cinema/d5696fde-9f19-47ca-a65b-b54c4597ba50",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Cinema",
+								"d5696fde-9f19-47ca-a65b-b54c4597ba50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCinemaAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"name\": \"Cinema\",\r\n    \"address\": \"City,Street,House\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Cinema",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Cinema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCinemaAsync",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Cinema/973f2028-44f8-402d-80a8-75d5b9247aa9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Cinema",
+								"973f2028-44f8-402d-80a8-75d5b9247aa9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCinemaAsync",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"d932bc5f-b2a9-4687-aaa1-3f65cd585af3\",\r\n    \"name\": \"Cinema2\",\r\n    \"address\": \"City2,Street2,House2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Cinema/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Cinema",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hall",
+			"item": [
+				{
+					"name": "GetHallsAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Hall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Hall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHallByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Hall/f9b93c0f-398a-4b9e-82a8-55998ba79811",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Hall",
+								"f9b93c0f-398a-4b9e-82a8-55998ba79811"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateHallAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n    \"number\": \"0\",\r\n    \"seats\": 100,\r\n    \"cinemaId\": \"d5696fde-9f19-47ca-a65b-b54c4597ba50\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Hall",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Hall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateHallAsync",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"ace50e54-b9da-4186-aa7c-c9922b7f53d1\",\r\n    \"number\": \"100\",\r\n    \"seats\": 200,\r\n    \"cinemaId\": \"d5696fde-9f19-47ca-a65b-b54c4597ba50\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Hall/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Hall",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteHallAsync",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Hall/3bae674d-6b0a-4342-97e1-81cf5bd5b258",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Hall",
+								"3bae674d-6b0a-4342-97e1-81cf5bd5b258"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Login/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "GetMoviesAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Movie/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Movie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMovieAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Movie/2f69d28e-7cad-4f3e-bb26-af56904071c7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Movie",
+								"2f69d28e-7cad-4f3e-bb26-af56904071c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateMovieAsync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": \"00000000-0000-0000-0000-000000000000\",\r\n        \"title\": \"MovieTest\",\r\n        \"description\": \"DescriptionTest\",\r\n        \"genre\": \"GenreTest\",\r\n        \"director\": \"DirectorTest\",\r\n        \"duration\": \"01:30:56\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Movie/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Movie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMovieAsync",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": \"943affee-0958-41bd-99ee-7d58e557ac18\",\r\n        \"title\": \"MovieTestUpdated\",\r\n        \"description\": \"DescriptionTestUpdated\",\r\n        \"genre\": \"GenreTest\",\r\n        \"director\": \"DirectorTest\",\r\n        \"duration\": \"01:30:56\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/Movie/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Movie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMovieAsync",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/Movie/943affee-0958-41bd-99ee-7d58e557ac18",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"Movie",
+								"943affee-0958-41bd-99ee-7d58e557ac18"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Session",
+			"item": [
+				{
+					"name": "GetSessionsAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetSessionByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CreateSessionAsync",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateSessionAsync",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSessionAsync",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ticket",
+			"item": [
+				{
+					"name": "GetTicketsAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetTIcketByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetTicketByUserIdAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CreateTicketAsync",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTicketAsync",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTicketAsync",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetUsersAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByIdAsync",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CreateUserAsync",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserAsync",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserAsync",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5103/api",
+			"type": "string"
+		}
+	]
+}
