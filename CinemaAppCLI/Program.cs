@@ -6,6 +6,11 @@ using CinemaApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Spectre.Console;
 using System.Runtime.InteropServices;
+using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 
 class Program
 {
@@ -20,7 +25,6 @@ class Program
 
     static async Task Main(string[] args)
     {
-        // Maksymalizacja okna konsoli
         IntPtr handle = GetConsoleWindow();
         ShowWindow(handle, SW_MAXIMIZE);
 
@@ -35,41 +39,55 @@ class Program
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
         optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CinemaApp;Trusted_Connection=True;MultipleActiveResultSets=true");
         var context = new ApplicationContext(optionsBuilder.Options);
-
+        User user = new User{ Role=" "};
         bool exit = false;
         while (!exit)
         {
+            string[] menuChoices;
             ShowHeader();
+            if (user.Role == "admin") {
+                menuChoices = new string[]{ "1. Show Movies", "2. Add Movie", "3. Edit Movie", "4. Delete Movie",
+                    "9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
+                    "13. Show Cinemas", "14. Add Cinema", "15. Edit Cinema", "16. Delete Cinema",
+                    "17. Show Halls", "18. Add Hall", "19. Edit Hall", "20. Delete Hall",
+                    "21. Login User", "22. Show Users", "23. Add User", "24. Edit User", "25. Delete User", "26. Exit"};
+                }
+            else if (user.Role == "user") {
+                    menuChoices = new string[] {
+                        "1. Show Movies",
+                        "2. Show User Tickets",
+                        "3. Book Ticket",
+                        "4. Show Sessions",
+                        "5. Exit",
+                        "6. Logout",
+                    };
+                }
+            else
+            {
+              menuChoices = new string[] {
+                        "1. Show Movies",
+                        "2. Show Sessions",
+                        "3. Login User",
+                        "4. Add user",
+                        "5. Exit"
+                    };
+            }
 
-            // Tworzenie menu z użyciem Spectre.Console
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title("[bold yellow]Wybierz opcję z menu poniżej:[/]")
                     .PageSize(15)
-                    .AddChoices(new[]
-                    {
-                        "1. Show Movies", "2. Add Movie", "3. Edit Movie", "4. Delete Movie",
-                        "5. Show User Tickets", "6. Book Ticket", "7. Edit Ticket", "8. Delete Ticket",
-                        "9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
-                        "13. Show Cinemas", "14. Add Cinema", "15. Edit Cinema", "16. Delete Cinema",
-                        "17. Show Halls", "18. Add Hall", "19. Edit Hall", "20. Delete Hall",
-                        "21. Login User", "22. Show Users", "23. Add User", "24. Edit User",
-                        "25. Delete User", "26. Exit"
-                    }));
+                    .AddChoices(menuChoices));
 
             Console.Clear();
             ShowHeader();
 
             switch (choice)
             {
-                case "1. Show Movies": await ShowMovies(context); break;
+                case "1. Show Movies": await ShowMovies(context);break;
                 case "2. Add Movie": await AddMovie(context); break;
-                case "3. Edit Movie": await EditMovie(context); break;
-                case "4. Delete Movie": await DeleteMovie(context); break;
-                case "5. Show User Tickets": await ShowUserTickets(context); break;
-                case "6. Book Ticket": await BookTicket(context); break;
-                case "7. Edit Ticket": await EditTicket(context); break;
-                case "8. Delete Ticket": await DeleteTicket(context); break;
+                case "3. Edit Movie": await EditMovie(context);break;
+                case "4. Delete Movie": await DeleteMovie(context);break;
                 case "9. Show Sessions": await ShowSessions(context); break;
                 case "10. Add Session": await AddSession(context); break;
                 case "11. Edit Session": await EditSession(context); break;
@@ -82,12 +100,19 @@ class Program
                 case "18. Add Hall": await AddHall(context); break;
                 case "19. Edit Hall": await EditHall(context); break;
                 case "20. Delete Hall": await DeleteHall(context); break;
-                case "21. Login User": await LoginUser(context); break;
-                case "22. Show Users": await ShowUsers(context); break;
+                case  "22. Show Users": await ShowUsers(context); break;
                 case "23. Add User": await AddUser(context); break;
                 case "24. Edit User": await EditUser(context); break;
                 case "25. Delete User": await DeleteUser(context); break;
                 case "26. Exit": exit = true; break;
+                case "2. Show User Tickets": await ShowUserTickets(context); break;
+                case "3. Book Ticket": await BookTicket(context); break;
+                case "4. Show Sessions": await ShowSessions(context); break;
+                case "5. Exit": exit = true; break;
+                case "2. Show Sessions": await ShowSessions(context); break;
+                case "3. Login User": user = await LoginUser(context); break;
+                case "4. Add user": await AddUser(context); break;
+                case "6. Logout": user = new User { Role = " " }; break;
             }
 
             if (!exit)
@@ -1034,7 +1059,7 @@ class Program
         AnsiConsole.MarkupLine("[bold red]Sala została pomyślnie usunięta![/]");
     }
     //users
-    static async Task LoginUser(ApplicationContext context)
+    static async Task<User> LoginUser(ApplicationContext context)
     {
         string email = AnsiConsole.Ask<string>("[green]Wprowadź email:[/]");
         string password = AnsiConsole.Prompt(
@@ -1046,13 +1071,16 @@ class Program
         var loginController = new LoginController(context);
         var result = await loginController.Login(new Login { Email = email, Password = password });
 
-        if (result is OkObjectResult)
+        if (result is OkObjectResult okResult)
         {
-            AnsiConsole.MarkupLine("[bold green]Logowanie zakończone sukcesem.[/]");
+            var response = JObject.FromObject(okResult.Value);
+            var userResponse = response["User"]?.ToObject<User>();
+            return userResponse;
         }
         else
         {
             AnsiConsole.MarkupLine("[bold red]Niepoprawne dane logowania.[/]");
+            return null;
         }
     }
 

@@ -19,7 +19,7 @@ namespace CinemaApp.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == login.Email);
             if ( user!=null && user.Password==login.Password)
             {
-                return Ok(new { message = "Login successful", role = user.Role });
+                return Ok(new { message = "Login successful", User = user});
             }
 
             return Unauthorized("Invalid credentials");
