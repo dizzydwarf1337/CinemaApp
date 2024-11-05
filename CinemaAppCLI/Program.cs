@@ -345,14 +345,12 @@ class Program
             var ticketController = new TicketController(context);
             var tickets = await ticketController.GetTicketsByUserIdAsync(user.Id);
 
-            // Проверка на наличие билетов
             if (tickets == null || tickets.Count == 0)
             {
                 AnsiConsole.MarkupLine("[red]Brak dostępnych biletów dla tego użytkownika.[/]");
                 return;
             }
 
-            // Получаем уникальные сеансы, к которым относятся билеты
             var sessionIds = tickets.Select(t => t.SessionId).Distinct();
             var sessions = await context.Sessions
                 .Include(s => s.Movie)
@@ -360,7 +358,6 @@ class Program
                 .Where(s => sessionIds.Contains(s.Id))
                 .ToListAsync();
 
-            // Создаем таблицу для отображения
             var ticketTable = new Table().Border(TableBorder.Rounded);
             ticketTable.AddColumn("[u]Movie[/]");
             ticketTable.AddColumn("[u]Hall[/]");
@@ -368,7 +365,6 @@ class Program
             ticketTable.AddColumn("[u]Status[/]");
             ticketTable.AddColumn("[u]Price[/]");
 
-            // Добавляем информацию о билетах в таблицу
             foreach (var ticket in tickets)
             {
                 var session = sessions.FirstOrDefault(s => s.Id == ticket.SessionId);
