@@ -47,7 +47,7 @@ class Program
             ShowHeader();
             if (user.Role == "admin") {
                 menuChoices = new string[]{ "1. Show Movies", "2. Add Movie", "3. Edit Movie", "4. Delete Movie",
-                    "9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
+                    "5. Show tickets","6. Logout","9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
                     "13. Show Cinemas", "14. Add Cinema", "15. Edit Cinema", "16. Delete Cinema",
                     "17. Show Halls", "18. Add Hall", "19. Edit Hall", "20. Delete Hall",
                     "21. Login User", "22. Show Users", "23. Add User", "24. Edit User", "25. Delete User", "26. Exit"};
@@ -88,6 +88,7 @@ class Program
                 case "2. Add Movie": await AddMovie(context); break;
                 case "3. Edit Movie": await EditMovie(context);break;
                 case "4. Delete Movie": await DeleteMovie(context);break;
+                case "5. Show tickets": await ShowUserTickets(context,user); break;
                 case "9. Show Sessions": await ShowSessions(context); break;
                 case "10. Add Session": await AddSession(context); break;
                 case "11. Edit Session": await EditSession(context); break;
