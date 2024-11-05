@@ -105,7 +105,7 @@ class Program
                 case "24. Edit User": await EditUser(context); break;
                 case "25. Delete User": await DeleteUser(context); break;
                 case "26. Exit": exit = true; break;
-                case "2. Show User Tickets": await ShowUserTickets(context); break;
+                case "2. Show User Tickets": await ShowUserTickets(context, user); break;
                 case "3. Book Ticket": await BookTicket(context); break;
                 case "4. Show Sessions": await ShowSessions(context); break;
                 case "5. Exit": exit = true; break;
@@ -283,60 +283,109 @@ class Program
     }
     //tickets
 
-    static async Task ShowUserTickets(ApplicationContext context)
+    static async Task ShowUserTickets(ApplicationContext context, User user)
     {
-        var userController = new UserController(context);
-        var users = await userController.GetUserAsync();
-
-        if (users == null || users.Count == 0)
+        if (user.Role == "admin")
         {
-            AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
-            return;
+            var userController = new UserController(context);
+            var users = await userController.GetUserAsync();
+
+            if (users == null || users.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
+                return;
+            }
+
+            // Wyświetlenie tabeli z użytkownikami
+            var userTable = new Table().Border(TableBorder.Rounded);
+            userTable.AddColumn("[u]ID[/]");
+            userTable.AddColumn("[u]Imię[/]");
+            userTable.AddColumn("[u]Nazwisko[/]");
+            userTable.AddColumn("[u]Email[/]");
+
+            foreach (var user1 in users)
+            {
+                userTable.AddRow(user1.Id.ToString(), user1.Name, user1.LastName, user1.Email);
+            }
+
+            AnsiConsole.Write(userTable);
+
+            // Wybór użytkownika na podstawie ID
+            var userId = AnsiConsole.Prompt(
+                new SelectionPrompt<Guid>()
+                    .Title("[green]Wybierz ID użytkownika, aby wyświetlić bilety:[/]")
+                    .AddChoices(users.Select(u => u.Id))
+            );
+
+            var ticketController = new TicketController(context);
+            var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
+
+            if (tickets == null || tickets.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]Brak dostępnych biletów dla tego użytkownika.[/]");
+                return;
+            }
+
+            // Wyświetlenie tabeli z biletami
+            var ticketTable = new Table().Border(TableBorder.Rounded);
+            ticketTable.AddColumn("[u]ID[/]");
+            ticketTable.AddColumn("[u]Seat[/]");
+            ticketTable.AddColumn("[u]Status[/]");
+            ticketTable.AddColumn("[u]Price[/]");
+
+            foreach (var ticket in tickets)
+            {
+                ticketTable.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.Price.ToString("C"));
+            }
+
+            AnsiConsole.Write(ticketTable);
         }
-
-        // Wyświetlenie tabeli z użytkownikami
-        var userTable = new Table().Border(TableBorder.Rounded);
-        userTable.AddColumn("[u]ID[/]");
-        userTable.AddColumn("[u]Imię[/]");
-        userTable.AddColumn("[u]Nazwisko[/]");
-        userTable.AddColumn("[u]Email[/]");
-
-        foreach (var user in users)
+        else if (user.Role == "user")
         {
-            userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+            var ticketController = new TicketController(context);
+            var tickets = await ticketController.GetTicketsByUserIdAsync(user.Id);
+
+            // Проверка на наличие билетов
+            if (tickets == null || tickets.Count == 0)
+            {
+                AnsiConsole.MarkupLine("[red]Brak dostępnych biletów dla tego użytkownika.[/]");
+                return;
+            }
+
+            // Получаем уникальные сеансы, к которым относятся билеты
+            var sessionIds = tickets.Select(t => t.SessionId).Distinct();
+            var sessions = await context.Sessions
+                .Include(s => s.Movie)
+                .Include(s => s.Hall)
+                .Where(s => sessionIds.Contains(s.Id))
+                .ToListAsync();
+
+            // Создаем таблицу для отображения
+            var ticketTable = new Table().Border(TableBorder.Rounded);
+            ticketTable.AddColumn("[u]Movie[/]");
+            ticketTable.AddColumn("[u]Hall[/]");
+            ticketTable.AddColumn("[u]Seat[/]");
+            ticketTable.AddColumn("[u]Status[/]");
+            ticketTable.AddColumn("[u]Price[/]");
+
+            // Добавляем информацию о билетах в таблицу
+            foreach (var ticket in tickets)
+            {
+                var session = sessions.FirstOrDefault(s => s.Id == ticket.SessionId);
+                if (session != null)
+                {
+                    ticketTable.AddRow(
+                        session.Movie.Title,
+                        session.Hall.Number.ToString(),
+                        ticket.Seat.ToString(),
+                        ticket.Status,
+                        ticket.Price.ToString("C")
+                    );
+                }
+            }
+
+            AnsiConsole.Write(ticketTable);
         }
-
-        AnsiConsole.Write(userTable);
-
-        // Wybór użytkownika na podstawie ID
-        var userId = AnsiConsole.Prompt(
-            new SelectionPrompt<Guid>()
-                .Title("[green]Wybierz ID użytkownika, aby wyświetlić bilety:[/]")
-                .AddChoices(users.Select(u => u.Id))
-        );
-
-        var ticketController = new TicketController(context);
-        var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
-
-        if (tickets == null || tickets.Count == 0)
-        {
-            AnsiConsole.MarkupLine("[red]Brak dostępnych biletów dla tego użytkownika.[/]");
-            return;
-        }
-
-        // Wyświetlenie tabeli z biletami
-        var ticketTable = new Table().Border(TableBorder.Rounded);
-        ticketTable.AddColumn("[u]ID[/]");
-        ticketTable.AddColumn("[u]Seat[/]");
-        ticketTable.AddColumn("[u]Status[/]");
-        ticketTable.AddColumn("[u]Price[/]");
-
-        foreach (var ticket in tickets)
-        {
-            ticketTable.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.Price.ToString("C"));
-        }
-
-        AnsiConsole.Write(ticketTable);
     }
 
     static async Task BookTicket(ApplicationContext context)

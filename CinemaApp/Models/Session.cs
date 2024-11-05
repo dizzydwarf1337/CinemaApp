@@ -1,4 +1,6 @@
-﻿namespace CinemaApp.Models
+﻿using CinemaApp.Models.Dtos;
+
+namespace CinemaApp.Models
 {
     public class Session
     {
