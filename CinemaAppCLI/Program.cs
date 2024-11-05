@@ -362,6 +362,7 @@ class Program
             var ticketTable = new Table().Border(TableBorder.Rounded);
             ticketTable.AddColumn("[u]Movie[/]");
             ticketTable.AddColumn("[u]Hall[/]");
+            ticketTable.AddColumn("[u]Date and time[/]");
             ticketTable.AddColumn("[u]Seat[/]");
             ticketTable.AddColumn("[u]Status[/]");
             ticketTable.AddColumn("[u]Price[/]");
@@ -374,6 +375,7 @@ class Program
                     ticketTable.AddRow(
                         session.Movie.Title,
                         session.Hall.Number.ToString(),
+                        session.Date.ToString("yyyy-MM-dd HH:mm"),
                         ticket.Seat.ToString(),
                         ticket.Status,
                         ticket.Price.ToString("C")
