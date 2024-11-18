@@ -46,91 +46,30 @@ class Program
             string[] menuChoices;
             ShowHeader();
             if (user.Role == "admin") {
-                //menuChoices = new string[]{ "1. Show Movies", "2. Add Movie", "3. Edit Movie", "4. Delete Movie",
-                //    "5. Show tickets","6. Logout","9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
-                //    "13A. Show Cinemas", "14. Add Cinema", "15. Edit Cinema", "16. Delete Cinema",
-                //    "17. Show Halls", "18. Add Hall", "19. Edit Hall", "20. Delete Hall",
-                //    "21. Login User", "22. Show Users", "23. Add User", "24. Edit User", "25. Delete User", "26. Exit"};
-                //}
-
-            menuChoices = new string[]
-       {
-            // Movies
-            "1. Show Movies",
-            "2. Add Movie",
-            "3. Edit Movie",
-            "4. Delete Movie",
-
-            // Sessions
-            "5. Show Sessions",
-            "6. Add Session",
-            "7. Edit Session",
-            "8. Delete Session",
-
-            // Tickets
-            "9. Show Tickets",
-            "10. Show User Tickets",
-
-            // Cinemas
-            "11. Show Cinemas",
-            "12. Add Cinema",
-            "13. Edit Cinema",
-            "14. Delete Cinema",
-
-            // Halls
-            "15. Show Halls",
-            "16. Add Hall",
-            "17. Edit Hall",
-            "18. Delete Hall",
-
-            // Users
-            "19. Show Users",
-            "20. Add User",
-            "21. Edit User",
-            "22. Delete User",
-
-            // Other
-            "23. Login User",
-            "24. Logout",
-            "25. Exit"
-       };
-        }
-
+                menuChoices = new string[]{ "1. Show Movies", "2. Add Movie", "3. Edit Movie", "4. Delete Movie",
+                    "5. Show tickets","6. Logout","9. Show Sessions", "10. Add Session", "11. Edit Session", "12. Delete Session",
+                    "13. Show Cinemas", "14. Add Cinema", "15. Edit Cinema", "16. Delete Cinema",
+                    "17. Show Halls", "18. Add Hall", "19. Edit Hall", "20. Delete Hall",
+                    "21. Login User", "22. Show Users", "23. Add User", "24. Edit User", "25. Delete User", "26. Exit"};
+                }
             else if (user.Role == "user") {
                     menuChoices = new string[] {
                         "1. Show Movies",
                         "2. Show User Tickets",
                         "3. Book Ticket",
-                        "4. Edit Ticket",
-                        "5. Delete Ticket",
-                        "6. Show Sessions",
-                        "7. Show Cinemas",
-                        "8. Logout",
-                        "9. Exit"
+                        "4. Show Sessions",
+                        "5. Exit",
+                        "6. Logout",
                     };
                 }
-            ///jak sie zle zaloguje to wywala program
-            else if (user.Role == "null")
-            {
-                menuChoices = new string[] {
-                        "1. Show Movies",
-                        "2. Show Sessions",
-                        "3. Login User",
-                        "4. Add user",
-                        "5. Show Cinemas",
-                        "6. Exit",
-                    };
-            }
-
             else
             {
               menuChoices = new string[] {
                         "1. Show Movies",
                         "2. Show Sessions",
-                        "3. Show Cinemas",
-                        "4. Login User",
-                        "5. Add User",
-                        "6. Exit"
+                        "3. Login User",
+                        "4. Add user",
+                        "5. Exit"
                     };
             }
 
@@ -145,94 +84,36 @@ class Program
 
             switch (choice)
             {
-              //  case "1. Show Movies": await ShowMovies(context);break;
-                //case "2. Add Movie": await AddMovie(context); break;
-                //case "3. Edit Movie": await EditMovie(context);break;
-                //case "4. Delete Movie": await DeleteMovie(context);break;
-                //case "5. Show tickets": await ShowUserTickets(context,user); break;
-                //case "9. Show Sessions": await ShowSessions(context); break;
-                //case "10. Add Session": await AddSession(context); break;
-                //case "11. Edit Session": await EditSession(context); break;
-                //case "12. Delete Session": await DeleteSession(context); break;
+                case "1. Show Movies": await ShowMovies(context);break;
+                case "2. Add Movie": await AddMovie(context); break;
+                case "3. Edit Movie": await EditMovie(context);break;
+                case "4. Delete Movie": await DeleteMovie(context);break;
+                case "5. Show tickets": await ShowUserTickets(context,user); break;
+                case "9. Show Sessions": await ShowSessions(context); break;
+                case "10. Add Session": await AddSession(context); break;
+                case "11. Edit Session": await EditSession(context); break;
+                case "12. Delete Session": await DeleteSession(context); break;
                 case "13. Show Cinemas": await ShowCinemas(context); break;
-                //case "14. Add Cinema": await AddCinema(context); break;
-                //case "15. Edit Cinema": await EditCinema(context); break;
-                //case "16. Delete Cinema": await DeleteCinema(context); break;
-                //case "17. Show Halls": await ShowHalls(context); break;
-                //case "18. Add Hall": await AddHall(context); break;
-                //case "19. Edit Hall": await EditHall(context); break;
-                //case "20. Delete Hall": await DeleteHall(context); break;
-                //case  "22. Show Users": await ShowUsers(context); break;
-                //case "23. Add User": await AddUser(context); break;
-                //case "24. Edit User": await EditUser(context); break;
-                //case "25. Delete User": await DeleteUser(context); break;
+                case "14. Add Cinema": await AddCinema(context); break;
+                case "15. Edit Cinema": await EditCinema(context); break;
+                case "16. Delete Cinema": await DeleteCinema(context); break;
+                case "17. Show Halls": await ShowHalls(context); break;
+                case "18. Add Hall": await AddHall(context); break;
+                case "19. Edit Hall": await EditHall(context); break;
+                case "20. Delete Hall": await DeleteHall(context); break;
+                case  "22. Show Users": await ShowUsers(context); break;
+                case "23. Add User": await AddUser(context); break;
+                case "24. Edit User": await EditUser(context); break;
+                case "25. Delete User": await DeleteUser(context); break;
                 case "26. Exit": exit = true; break;
                 case "2. Show User Tickets": await ShowUserTickets(context, user); break;
-                case "3. Book Ticket": await BookTicket(context, user); break;
+                case "3. Book Ticket": await BookTicket(context); break;
                 case "4. Show Sessions": await ShowSessions(context); break;
                 case "5. Exit": exit = true; break;
-              //  case "2. Show Sessions": await ShowSessions(context); break;
-                //case "3. Login User": user = await LoginUser(context); break;
+                case "2. Show Sessions": await ShowSessions(context); break;
+                case "3. Login User": user = await LoginUser(context); break;
                 case "4. Add user": await AddUser(context); break;
                 case "6. Logout": user = new User { Role = " " }; break;
-                case "7. Edit Ticket": await EditTicket(context, user); break;
-                case "8. Delete Ticket": await DeleteTicket(context, user); break;
-                case "13A. Show Cinemas": await ShowCinemasAdmin(context); break;
-               // case "6. Exit": exit = true; break;
-                case "5. Show Cinemas": await ShowCinemasAdmin(context); break;
-            //    case "4. Login User": user = await LoginUser(context); break;
-
-                //niezalogowany
-                case "1. Show Movies": await ShowMovies(context); break;
-                case "2. Show Sessions": await ShowSessions(context); break;
-                case "3. Show Cinemas": await ShowCinemas(context); break;
-                case "4. Login User": user = await LoginUser(context); break;
-                case "5. Add user": await AddUser(context); break;
-                case "6. Exit": exit = true; break;
-
-                //user
-              
-                //case "1. Show Movies": await ShowMovies(context); break;
-                //case "2. Show User Tickets": await ShowUserTickets(context, user); break;
-                //case "3. Book Ticket": await BookTicket(context, user); break;
-                case "4. Edit Ticket": await EditTicket(context, user); break;
-                case "5. Delete Ticket": await DeleteTicket(context, user); break;
-                case "6. Show Sessions": await ShowSessions(context); break;
-                case "7. Show Cinemas": await ShowCinemas(context); break;
-                case "8. Logout": user = new User { Role = " " }; break;
-                case "9. Exit": exit = true; break;
-
-
-                //admin
-                //case "1. Show Movies": await ShowMovies(context); break;
-                case "2. Add Movie": await AddMovie(context); break;
-                case "3. Edit Movie": await EditMovie(context); break;
-                case "4. Delete Movie": await DeleteMovie(context); break;
-                case "5. Show Sessions": await ShowSessions(context); break;
-                case "6. Add Session": await AddSession(context); break;
-                case "7. Edit Session": await EditSession(context); break;
-                case "8. Delete Session": await DeleteSession(context); break;
-                case "9. Show tickets": await ShowUserTickets(context, user); break;
-                case "10. Show User Tickets": await ShowUserTickets(context, user); break;
-                case "11. Show Cinemas": await ShowCinemasAdmin(context); break;
-                case "12. Add Cinema": await AddCinema(context); break;
-                case "13. Edit Cinema": await EditCinema(context); break;
-                case "14. Delete Cinema": await DeleteCinema(context); break;
-                case "15. Show Halls": await ShowHalls(context); break;
-                case "16. Add Hall": await AddHall(context); break;
-                case "17. Edit Hall": await EditHall(context); break;
-                case "18. Delete Hall": await DeleteHall(context); break;
-                case "19. Show Users": await ShowUsers(context); break;
-                case "20. Add User": await AddUser(context); break;
-                case "21. Edit User": await EditUser(context); break;
-                case "22. Delete User": await DeleteUser(context); break;
-                case "23. Login User": user = await LoginUser(context); break;
-                case "24. Logout": user = new User { Role = " " }; break;
-                case "25. Exit": exit = true; break;
-
-
-
-
             }
 
             if (!exit)
@@ -506,16 +387,40 @@ class Program
         }
     }
 
-   
-    static async Task BookTicket(ApplicationContext context, User loggedInUser)
+    static async Task BookTicket(ApplicationContext context)
     {
-        if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+        // Pobranie listy użytkowników
+        var userController = new UserController(context);
+        var users = await userController.GetUserAsync();
+
+        if (users == null || users.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą rezerwować bilety.[/]");
+            AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
             return;
         }
 
-        // Pobranie listy sesji z informacjami o filmach
+        // Wyświetlenie tabeli z użytkownikami
+        var userTable = new Table().Border(TableBorder.Rounded);
+        userTable.AddColumn("[u]ID[/]");
+        userTable.AddColumn("[u]Imię[/]");
+        userTable.AddColumn("[u]Nazwisko[/]");
+        userTable.AddColumn("[u]Email[/]");
+
+        foreach (var user in users)
+        {
+            userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+        }
+
+        AnsiConsole.Write(userTable);
+
+        // Wybór użytkownika na podstawie ID
+        var userId = AnsiConsole.Prompt(
+            new SelectionPrompt<Guid>()
+                .Title("[green]Wybierz ID użytkownika, aby dodać bilet:[/]")
+                .AddChoices(users.Select(u => u.Id))
+        );
+
+        // Pobranie listy sesji
         var sessionController = new SessionController(context);
         var sessions = await sessionController.GetSessionAsync();
 
@@ -525,114 +430,88 @@ class Program
             return;
         }
 
-        // Wyświetlenie dostępnych filmów z sesjami
-        var moviesWithSessions = sessions
-            .Select(s => new { Session = s, Movie = context.Movies.Find(s.MovieId) })
-            .Where(m => m.Movie != null)
-            .ToList();
+        // Wyświetlenie tabeli z sesjami
+        var sessionTable = new Table().Border(TableBorder.Rounded);
+        sessionTable.AddColumn("[u]ID[/]");
+        sessionTable.AddColumn("[u]Film ID[/]");
+        sessionTable.AddColumn("[u]Data[/]");
+        sessionTable.AddColumn("[u]Cena biletu[/]");
+        sessionTable.AddColumn("[u]Dostępne miejsca[/]");
 
-        var movieTable = new Table().Border(TableBorder.Rounded);
-        movieTable.AddColumn("[u]Tytuł Filmu[/]");
-        movieTable.AddColumn("[u]Data Sesji[/]");
-        movieTable.AddColumn("[u]Cena biletu[/]");
-        movieTable.AddColumn("[u]Dostępne miejsca[/]");
-
-        foreach (var item in moviesWithSessions)
+        foreach (var session in sessions)
         {
-            movieTable.AddRow(
-                item.Movie.Title,
-                item.Session.Date.ToString("yyyy-MM-dd HH:mm"),
-                item.Session.TicketPrice.ToString("C"),
-                item.Session.AvailibleSeats.ToString()
-            );
+            sessionTable.AddRow(session.Id.ToString(), session.MovieId.ToString(), session.Date.ToString("yyyy-MM-dd HH:mm"), session.TicketPrice.ToString("C"), session.AvailibleSeats.ToString());
         }
 
-        AnsiConsole.Write(movieTable);
+        AnsiConsole.Write(sessionTable);
 
-        // Wybór filmu po nazwie
-        var selectedMovieTitle = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("[green]Wybierz film, aby zarezerwować bilet:[/]")
-                .AddChoices(moviesWithSessions.Select(m => m.Movie.Title).Distinct())
+        // Wybór sesji na podstawie ID
+        var sessionId = AnsiConsole.Prompt(
+            new SelectionPrompt<Guid>()
+                .Title("[green]Wybierz ID sesji, aby zarezerwować bilet:[/]")
+                .AddChoices(sessions.Select(s => s.Id))
         );
 
-        // Pobranie dostępnych sesji dla wybranego filmu
-        var availableSessions = moviesWithSessions
-            .Where(m => m.Movie.Title == selectedMovieTitle)
-            .Select(m => m.Session)
-            .ToList();
+        Console.Write("Wprowadź ilość miejsc: ");
+        if (!int.TryParse(Console.ReadLine(), out int numberOfSeats) || numberOfSeats <= 0)
+        {
+            AnsiConsole.MarkupLine("[red]Niepoprawna ilość miejsc. Spróbuj ponownie.[/]");
+            return;
+        }
 
-        // Wybór daty sesji dla wybranego filmu
-        var selectedSessionDate = AnsiConsole.Prompt(
-            new SelectionPrompt<DateTime>()
-                .Title("[green]Wybierz datę sesji:[/]")
-                .AddChoices(availableSessions.Select(s => s.Date))
-        );
+        // Zmiana nazwy zmiennej na `selectedSession` dla uniknięcia konfliktu
+        var selectedSession = sessions.FirstOrDefault(s => s.Id == sessionId);
 
-        // Znalezienie wybranej sesji na podstawie wybranej daty
-        var selectedSession = availableSessions.First(s => s.Date == selectedSessionDate);
-
-        // Lista dostępnych miejsc
-        var availableSeats = GenerateSeatChoices();
-
-        // Wybór miejsca
-        var seat = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("[green]Wybierz miejsce (np. A1, B5):[/]")
-                .AddChoices(availableSeats)
-        );
-
-        // Wprowadzenie liczby miejsc
-        var numberOfSeats = AnsiConsole.Ask<int>("[green]Wprowadź ilość miejsc:[/]");
-
-        if (selectedSession.AvailibleSeats < numberOfSeats)
+        if (selectedSession == null || selectedSession.AvailibleSeats < numberOfSeats)
         {
             AnsiConsole.MarkupLine("[red]Niewystarczająca ilość dostępnych miejsc.[/]");
             return;
         }
 
-        // Utworzenie biletu
+        // Utworzenie obiektu biletu
         var ticketDto = new ticketDto
         {
-            SessionId = selectedSession.Id,
+            SessionId = sessionId,
             NumberOfSeats = numberOfSeats,
-            Seat = seat,
+            Seat = "A1", // Przykładowe miejsce, tutaj można wprowadzić logikę wyboru miejsca
             Status = "Reserved",
             Price = selectedSession.TicketPrice * numberOfSeats,
-            UserId = loggedInUser.Id // Przypisanie ID zalogowanego użytkownika
+            UserId = userId // Przypisanie wybranego ID użytkownika
         };
 
         var ticketController = new TicketController(context);
         await ticketController.CreateTicketAsync(ticketDto);
-        AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla zalogowanego użytkownika![/]");
+        AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla wybranego użytkownika![/]");
     }
 
-             
-    static List<string> GenerateSeatChoices()
-    // Generowanie listy miejsc od A1 do J10
+    static async Task EditTicket(ApplicationContext context)
     {
-        var seatChoices = new List<string>();
-        for (char row = 'A'; row <= 'J'; row++)
-        {
-            for (int number = 1; number <= 10; number++)
-            {
-                seatChoices.Add($"{row}{number}");
-            }
-        }
-        return seatChoices;
-    }
+        var userController = new UserController(context);
+        var users = await userController.GetUserAsync();
 
-  
-    static async Task EditTicket(ApplicationContext context, User loggedInUser)
-    {
-        if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+        if (users == null || users.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą edytować bilety.[/]");
+            AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
             return;
         }
 
+        // Wyświetlenie tabeli z użytkownikami
+        var userTable = new Table().Border(TableBorder.Rounded);
+        userTable.AddColumn("[u]ID[/]");
+        userTable.AddColumn("[u]Imię[/]");
+        userTable.AddColumn("[u]Nazwisko[/]");
+        userTable.AddColumn("[u]Email[/]");
+
+        foreach (var user in users)
+        {
+            userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+        }
+
+        AnsiConsole.Write(userTable);
+
+        var userId = AnsiConsole.Ask<Guid>("[green]Podaj ID użytkownika, aby pobrać jego bilety:[/]");
         var ticketController = new TicketController(context);
-        var tickets = await ticketController.GetTicketsByUserIdAsync(loggedInUser.Id);
+        var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
 
         if (tickets == null || tickets.Count == 0)
         {
@@ -640,112 +519,12 @@ class Program
             return;
         }
 
+        // Wyświetlenie tabeli z biletami
         var table = new Table().Border(TableBorder.Rounded);
         table.AddColumn("[u]ID[/]");
         table.AddColumn("[u]Seat[/]");
         table.AddColumn("[u]Status[/]");
-        table.AddColumn("[u]Liczba miejsc[/]");
-
-        foreach (var ticket in tickets)
-        {
-            table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.NumberOfSeats.ToString());
-        }
-
-        AnsiConsole.Write(table);
-
-        // Wybór biletu do edycji
-        var ticketId = AnsiConsole.Prompt(
-            new SelectionPrompt<Guid>()
-                .Title("[green]Wybierz ID biletu do edycji:[/]")
-                .AddChoices(tickets.Select(t => t.Id))
-        );
-
-        // Pobranie biletu do edycji
-        var selectedTicket = tickets.FirstOrDefault(t => t.Id == ticketId);
-
-        if (selectedTicket == null)
-        {
-            AnsiConsole.MarkupLine("[red]Nie znaleziono biletu do edycji.[/]");
-            return;
-        }
-
-        // Ensure the UserId is valid and retained
-        var user = await context.Users.FindAsync(selectedTicket.UserId);
-        if (user == null)
-        {
-            AnsiConsole.MarkupLine("[red]Użytkownik przypisany do tego biletu nie istnieje.[/]");
-            return;
-        }
-
-        int originalNumberOfSeats = selectedTicket.NumberOfSeats;
-        AnsiConsole.MarkupLine($"[blue]Liczba miejsc w wybranym bilecie: {originalNumberOfSeats}[/]");
-
-        // Wybór nowych miejsc, zgodnie z oryginalną liczbą miejsc
-        List<string> seats;
-        do
-        {
-            seats = AnsiConsole.Prompt(
-                new MultiSelectionPrompt<string>()
-                    .Title($"[green]Wybierz {originalNumberOfSeats} nowe miejsce(-a):[/]")
-                    .AddChoices(GenerateSeatChoices())
-                    .PageSize(10)
-            );
-
-            if (seats.Count != originalNumberOfSeats)
-            {
-                AnsiConsole.MarkupLine($"[red]Musisz wybrać dokładnie {originalNumberOfSeats} miejsc(-a).[/]");
-            }
-        }
-        while (seats.Count != originalNumberOfSeats);
-
-        string status = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("[green]Podaj nowy status biletu (np. 'Reserved', 'Cancelled'):[/]")
-                .AddChoices("Reserved", "Cancelled", "Paid")
-        );
-
-        // Update the ticket with new information, preserving the original UserId
-        var ticketDto = new ticketDto
-        {
-            Id = ticketId,
-            Seat = string.Join(", ", seats), // Zapisanie miejsc jako łańcuch (np. "A1, A2")
-            Status = status,
-            NumberOfSeats = originalNumberOfSeats,
-            UserId = selectedTicket.UserId, // Ensure we keep the existing valid UserId
-            SessionId = selectedTicket.SessionId // Ensure we keep the existing valid SessionId
-        };
-
-        await ticketController.UpdateTicketAsync(ticketDto);
-        AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
-    }
-
-
-    static async Task DeleteTicket(ApplicationContext context, User loggedInUser)
-    {
-        // Sprawdzenie, czy użytkownik jest zalogowany i ma rolę "user"
-        if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
-        {
-            AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą usuwać bilety.[/]");
-            return;
-        }
-
-        // Pobranie biletów użytkownika
-        var ticketController = new TicketController(context);
-        var tickets = await ticketController.GetTicketsByUserIdAsync(loggedInUser.Id);
-
-        // Sprawdzenie, czy użytkownik ma jakiekolwiek bilety
-        if (tickets == null || tickets.Count == 0)
-        {
-            AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do usunięcia dla tego użytkownika.[/]");
-            return;
-        }
-
-        // Wyświetlenie tabeli z biletami użytkownika
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[u]ID[/]");
-        table.AddColumn("[u]Seat[/]");
-        table.AddColumn("[u]Status[/]");
-        table.AddColumn("[u]Cena[/]");
+        table.AddColumn("[u]Price[/]");
 
         foreach (var ticket in tickets)
         {
@@ -754,26 +533,92 @@ class Program
 
         AnsiConsole.Write(table);
 
-        // Wybór biletu do usunięcia
+        // Pobranie ID biletu do edycji
+        var ticketId = AnsiConsole.Prompt(
+            new SelectionPrompt<Guid>()
+                .Title("[green]Wybierz ID biletu do edycji:[/]")
+                .AddChoices(tickets.Select(t => t.Id))
+        );
+
+        // Pobranie nowych danych od użytkownika
+        string seat = AnsiConsole.Ask<string>("[green]Podaj nowe miejsce:[/]");
+        string status = AnsiConsole.Ask<string>("[green]Podaj nowy status (np. 'Reserved', 'Cancelled'):[/]");
+        double price = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+        int numberOfSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę miejsc:[/]");
+
+        var ticketDto = new ticketDto
+        {
+            Id = ticketId,
+            Seat = seat,
+            Status = status,
+            Price = price,
+            NumberOfSeats = numberOfSeats
+        };
+
+        await ticketController.UpdateTicketAsync(ticketDto);
+        AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
+    }
+
+    static async Task DeleteTicket(ApplicationContext context)
+    {
+        var userController = new UserController(context);
+        var users = await userController.GetUserAsync();
+
+        if (users == null || users.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
+            return;
+        }
+
+        // Wyświetlenie tabeli z użytkownikami
+        var userTable = new Table().Border(TableBorder.Rounded);
+        userTable.AddColumn("[u]ID[/]");
+        userTable.AddColumn("[u]Imię[/]");
+        userTable.AddColumn("[u]Nazwisko[/]");
+        userTable.AddColumn("[u]Email[/]");
+
+        foreach (var user in users)
+        {
+            userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+        }
+
+        AnsiConsole.Write(userTable);
+
+        var userId = AnsiConsole.Ask<Guid>("[green]Podaj ID użytkownika, aby pobrać jego bilety:[/]");
+        var ticketController = new TicketController(context);
+        var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
+
+        if (tickets == null || tickets.Count == 0)
+        {
+            AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do usunięcia dla tego użytkownika.[/]");
+            return;
+        }
+
+        // Wyświetlenie tabeli z biletami
+        var table = new Table().Border(TableBorder.Rounded);
+        table.AddColumn("[u]ID[/]");
+        table.AddColumn("[u]Seat[/]");
+        table.AddColumn("[u]Status[/]");
+        table.AddColumn("[u]Price[/]");
+
+        foreach (var ticket in tickets)
+        {
+            table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.Price.ToString("C"));
+        }
+
+        AnsiConsole.Write(table);
+
+        // Pobranie ID biletu do usunięcia
         var ticketId = AnsiConsole.Prompt(
             new SelectionPrompt<Guid>()
                 .Title("[green]Wybierz ID biletu do usunięcia:[/]")
                 .AddChoices(tickets.Select(t => t.Id))
         );
 
-        // Potwierdzenie usunięcia
-        bool confirmDelete = AnsiConsole.Confirm("[yellow]Czy na pewno chcesz usunąć wybrany bilet?[/]");
-        if (!confirmDelete)
-        {
-            AnsiConsole.MarkupLine("[yellow]Usunięcie biletu zostało anulowane.[/]");
-            return;
-        }
-
-        // Usunięcie biletu z bazy danych
         await ticketController.DeleteTicketByIdAsync(ticketId);
         AnsiConsole.MarkupLine("[bold red]Bilet został pomyślnie usunięty![/]");
     }
-
+    //session
     static async Task ShowSessions(ApplicationContext context)
     {
         var sessionController = new SessionController(context);
@@ -781,39 +626,32 @@ class Program
 
         if (sessions == null || sessions.Count == 0)
         {
-            AnsiConsole.MarkupLine("[red]Brak dostępnych sesji.[/]");
+            AnsiConsole.MarkupLine("[red]Brak dostępnych seansów.[/]");
             return;
         }
 
-        var table = new Table().Border(TableBorder.Rounded);
-        table.AddColumn("[u]Film[/]");
-        table.AddColumn("[u]Kino[/]");
-        table.AddColumn("[u]Sala[/]");
-        table.AddColumn("[u]Data[/]");
-        table.AddColumn("[u]Cena biletu[/]");
+        // Wyświetlenie tabeli z seansami
+        var sessionTable = new Table().Border(TableBorder.Rounded);
+        sessionTable.AddColumn("[u]ID[/]");
+        sessionTable.AddColumn("[u]Film ID[/]");
+        sessionTable.AddColumn("[u]Sala ID[/]");
+        sessionTable.AddColumn("[u]Data[/]");
+        sessionTable.AddColumn("[u]Cena biletu[/]");
 
         foreach (var session in sessions)
         {
-            // Pobranie powiązanych obiektów
-            var movie = await context.Movies.FindAsync(session.MovieId);
-            var hall = await context.Halls.FindAsync(session.HallId);
-            var cinema = hall != null ? await context.Cinemas.FindAsync(hall.CinemaId) : null;
-
-            // Dodanie wiersza do tabeli z pełnymi nazwami zamiast ID
-            table.AddRow(
-                movie?.Title ?? "[red]Nieznany film[/]",
-                cinema?.Name ?? "[red]Nieznane kino[/]",
-                hall?.Number ?? "[red]Nieznana sala[/]",
+            sessionTable.AddRow(
+                session.Id.ToString(),
+                session.MovieId.ToString(),
+                session.HallId.ToString(),
                 session.Date.ToString("yyyy-MM-dd HH:mm"),
                 session.TicketPrice.ToString("C")
             );
         }
 
-        AnsiConsole.Write(table);
+        AnsiConsole.Write(sessionTable);
     }
 
-
-    
     static async Task AddSession(ApplicationContext context)
     {
         // Wyświetlenie listy filmów
@@ -858,7 +696,7 @@ class Program
 
         var hallTable = new Table().Border(TableBorder.Rounded);
         hallTable.AddColumn("[u]ID[/]");
-        hallTable.AddColumn("[u]Numer sali[/]");
+        hallTable.AddColumn("[u]Numer[/]");
         hallTable.AddColumn("[u]Liczba miejsc[/]");
 
         foreach (var hall in halls)
@@ -875,7 +713,7 @@ class Program
                 .AddChoices(halls.Select(h => h.Id))
         );
 
-        // Podanie dodatkowych informacji do sesji
+        // Pobranie danych sesji
         var sessionDate = AnsiConsole.Ask<DateTime>("[green]Podaj datę sesji (yyyy-MM-dd HH:mm):[/]");
         var ticketPrice = AnsiConsole.Ask<double>("[green]Podaj cenę biletu:[/]");
         var availableSeats = AnsiConsole.Ask<int>("[green]Podaj liczbę dostępnych miejsc:[/]");
@@ -894,10 +732,9 @@ class Program
         AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie dodana![/]");
     }
 
-
-
     static async Task EditSession(ApplicationContext context)
     {
+        // Wyświetlenie listy sesji
         var sessionController = new SessionController(context);
         var sessions = await sessionController.GetSessionAsync();
 
@@ -907,7 +744,6 @@ class Program
             return;
         }
 
-        // Display sessions
         var sessionTable = new Table().Border(TableBorder.Rounded);
         sessionTable.AddColumn("[u]ID[/]");
         sessionTable.AddColumn("[u]Film ID[/]");
@@ -930,53 +766,29 @@ class Program
 
         AnsiConsole.Write(sessionTable);
 
-        // Select session to edit
+        // Wybór sesji do edycji
         var sessionId = AnsiConsole.Prompt(
             new SelectionPrompt<Guid>()
                 .Title("[green]Wybierz ID sesji do edycji:[/]")
                 .AddChoices(sessions.Select(s => s.Id))
         );
 
-        var selectedSession = sessions.FirstOrDefault(s => s.Id == sessionId);
-        if (selectedSession == null)
-        {
-            AnsiConsole.MarkupLine("[red]Nie znaleziono sesji o podanym ID.[/]");
-            return;
-        }
-
-        // Ensure HallId exists
-        var hall = context.Halls.FirstOrDefault(h => h.Id == selectedSession.HallId);
-        if (hall == null)
-        {
-            AnsiConsole.MarkupLine("[red]Sala powiązana z tą sesją już nie istnieje. Edycja niemożliwa.[/]");
-            return;
-        }
-
-        // Get new session data
+        // Pobranie nowych danych sesji
         var sessionDate = AnsiConsole.Ask<DateTime>("[green]Podaj nową datę sesji (yyyy-MM-dd HH:mm):[/]");
         var ticketPrice = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+        var availableSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę dostępnych miejsc:[/]");
 
-        // Update session DTO
         var sessionDto = new sessionDto
         {
             Id = sessionId,
             Date = sessionDate,
             TicketPrice = ticketPrice,
-            HallId = selectedSession.HallId, // Ensure HallId is not lost
-            MovieId = selectedSession.MovieId // Ensure MovieId is preserved
+            AvailibleSeats = availableSeats
         };
 
-        try
-        {
-            await sessionController.UpdateSessionAsync(sessionDto);
-            AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie zaktualizowana![/]");
-        }
-        catch (Exception ex)
-        {
-            AnsiConsole.MarkupLine($"[red]Wystąpił błąd podczas aktualizacji sesji: {ex.Message}[/]");
-        }
+        await sessionController.UpdateSessionAsync(sessionDto);
+        AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie zaktualizowana![/]");
     }
-
 
     static async Task DeleteSession(ApplicationContext context)
     {
@@ -1024,7 +836,7 @@ class Program
     }
 
     //cinemas
-    static async Task ShowCinemasAdmin(ApplicationContext context)
+    static async Task ShowCinemas(ApplicationContext context)
     {
         var cinemaController = new CinemaController(context);
         var cinemas = await cinemaController.GetCinemasAsync();
@@ -1048,32 +860,6 @@ class Program
 
         AnsiConsole.Write(cinemaTable);
     }
-
-    static async Task ShowCinemas(ApplicationContext context)
-    {
-        var cinemaController = new CinemaController(context);
-        var cinemas = await cinemaController.GetCinemasAsync();
-
-        if (cinemas == null || cinemas.Count == 0)
-        {
-            AnsiConsole.MarkupLine("[red]Brak dostępnych kin.[/]");
-            return;
-        }
-
-        // Wyświetlenie tabeli z kinami
-        var cinemaTable = new Table().Border(TableBorder.Rounded);
-      //  cinemaTable.AddColumn("[u]ID[/]");
-        cinemaTable.AddColumn("[u]Nazwa[/]");
-        cinemaTable.AddColumn("[u]Adres[/]");
-
-        foreach (var cinema in cinemas)
-        {
-            cinemaTable.AddRow( cinema.Name, cinema.Address);
-        }
-
-        AnsiConsole.Write(cinemaTable);
-    }
-
 
     static async Task AddCinema(ApplicationContext context)
     {
@@ -1321,49 +1107,30 @@ class Program
         AnsiConsole.MarkupLine("[bold red]Sala została pomyślnie usunięta![/]");
     }
     //users
-   
     static async Task<User> LoginUser(ApplicationContext context)
     {
-        while (true)
+        string email = AnsiConsole.Ask<string>("[green]Wprowadź email:[/]");
+        string password = AnsiConsole.Prompt(
+            new TextPrompt<string>("[green]Wprowadź hasło:[/]")
+                .PromptStyle("red")
+                .Secret()
+        );
+
+        var loginController = new LoginController(context);
+        var result = await loginController.Login(new Login { Email = email, Password = password });
+
+        if (result is OkObjectResult okResult)
         {
-            string email = AnsiConsole.Ask<string>("[green]Wprowadź email:[/]");
-            string password = AnsiConsole.Prompt(
-                new TextPrompt<string>("[green]Wprowadź hasło:[/]")
-                    .PromptStyle("red")
-                    .Secret()
-            );
-
-            var loginController = new LoginController(context);
-            var result = await loginController.Login(new Login { Email = email, Password = password });
-
-            if (result is OkObjectResult okResult)
-            {
-                // Try to extract the User object from the wrapper
-                var wrapper = okResult.Value;
-                var userProperty = wrapper.GetType().GetProperty("User");
-                if (userProperty != null)
-                {
-                    var user = userProperty.GetValue(wrapper) as User;
-                    if (user != null)
-                    {
-                        AnsiConsole.MarkupLine("[bold green]Logowanie zakończone sukcesem![/]");
-                        return user;
-                    }
-                }
-                else
-                {
-                    AnsiConsole.MarkupLine("[red]Unexpected login response format. Spróbuj ponownie.[/]");
-                    AnsiConsole.MarkupLine($"[grey]Received response: {okResult.Value}[/]");
-                }
-            }
-            else
-            {
-                AnsiConsole.MarkupLine("[bold red]Niepoprawne dane logowania. Spróbuj ponownie.[/]");
-            }
+            var response = JObject.FromObject(okResult.Value);
+            var userResponse = response["User"]?.ToObject<User>();
+            return userResponse;
+        }
+        else
+        {
+            AnsiConsole.MarkupLine("[bold red]Niepoprawne dane logowania.[/]");
+            return null;
         }
     }
-
-
 
     static async Task ShowUsers(ApplicationContext context)
     {

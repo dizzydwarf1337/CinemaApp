@@ -506,7 +506,478 @@ class Program
         }
     }
 
-   
+    //static async Task BookTicket(ApplicationContext context)
+    //{
+    //    // Pobranie listy użytkowników
+    //    var userController = new UserController(context);
+    //    var users = await userController.GetUserAsync();
+
+    //    if (users == null || users.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z użytkownikami
+    //    var userTable = new Table().Border(TableBorder.Rounded);
+    //    userTable.AddColumn("[u]ID[/]");
+    //    userTable.AddColumn("[u]Imię[/]");
+    //    userTable.AddColumn("[u]Nazwisko[/]");
+    //    userTable.AddColumn("[u]Email[/]");
+
+    //    foreach (var user in users)
+    //    {
+    //        userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+    //    }
+
+    //    AnsiConsole.Write(userTable);
+
+    //    // Wybór użytkownika na podstawie ID
+    //    var userId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID użytkownika, aby dodać bilet:[/]")
+    //            .AddChoices(users.Select(u => u.Id))
+    //    );
+
+    //    // Pobranie listy sesji
+    //    var sessionController = new SessionController(context);
+    //    var sessions = await sessionController.GetSessionAsync();
+
+    //    if (sessions == null || sessions.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z sesjami
+    //    var sessionTable = new Table().Border(TableBorder.Rounded);
+    //    sessionTable.AddColumn("[u]ID[/]");
+    //    sessionTable.AddColumn("[u]Film ID[/]");
+    //    sessionTable.AddColumn("[u]Data[/]");
+    //    sessionTable.AddColumn("[u]Cena biletu[/]");
+    //    sessionTable.AddColumn("[u]Dostępne miejsca[/]");
+
+    //    foreach (var session in sessions)
+    //    {
+    //        sessionTable.AddRow(session.Id.ToString(), session.MovieId.ToString(), session.Date.ToString("yyyy-MM-dd HH:mm"), session.TicketPrice.ToString("C"), session.AvailibleSeats.ToString());
+    //    }
+
+    //    AnsiConsole.Write(sessionTable);
+
+    //    // Wybór sesji na podstawie ID
+    //    var sessionId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID sesji, aby zarezerwować bilet:[/]")
+    //            .AddChoices(sessions.Select(s => s.Id))
+    //    );
+
+    //    Console.Write("Wprowadź ilość miejsc: ");
+    //    if (!int.TryParse(Console.ReadLine(), out int numberOfSeats) || numberOfSeats <= 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Niepoprawna ilość miejsc. Spróbuj ponownie.[/]");
+    //        return;
+    //    }
+
+    //    // Zmiana nazwy zmiennej na `selectedSession` dla uniknięcia konfliktu
+    //    var selectedSession = sessions.FirstOrDefault(s => s.Id == sessionId);
+
+    //    if (selectedSession == null || selectedSession.AvailibleSeats < numberOfSeats)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Niewystarczająca ilość dostępnych miejsc.[/]");
+    //        return;
+    //    }
+
+    //    // Utworzenie obiektu biletu
+    //    var ticketDto = new ticketDto
+    //    {
+    //        SessionId = sessionId,
+    //        NumberOfSeats = numberOfSeats,
+    //        Seat = "A1", // Przykładowe miejsce, tutaj można wprowadzić logikę wyboru miejsca
+    //        Status = "Reserved",
+    //        Price = selectedSession.TicketPrice * numberOfSeats,
+    //        UserId = userId // Przypisanie wybranego ID użytkownika
+    //    };
+
+    //    var ticketController = new TicketController(context);
+    //    await ticketController.CreateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla wybranego użytkownika![/]");
+    //}
+    /// <summary>
+    /// /zx
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="loggedInUser"></param>
+    /// <returns></returns>
+    //static async Task BookTicket(ApplicationContext context, User loggedInUser)
+    //{
+    //    if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą rezerwować bilety.[/]");
+    //        return;
+    //    }
+
+    //    // Pobranie listy sesji
+    //    var sessionController = new SessionController(context);
+    //    var sessions = await sessionController.GetSessionAsync();
+
+    //    if (sessions == null || sessions.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z sesjami wraz z nazwami filmów
+    //    var sessionTable = new Table().Border(TableBorder.Rounded);
+    //    sessionTable.AddColumn("[u]ID[/]");
+    //    sessionTable.AddColumn("[u]Film[/]");
+    //    sessionTable.AddColumn("[u]Data[/]");
+    //    sessionTable.AddColumn("[u]Cena biletu[/]");
+    //    sessionTable.AddColumn("[u]Dostępne miejsca[/]");
+
+    //    foreach (var session in sessions)
+    //    {
+    //        // Pobranie nazwy filmu na podstawie ID filmu w sesji
+    //        var movie = await context.Movies.FindAsync(session.MovieId);
+    //        var movieTitle = movie?.Title ?? "[red]Nieznany film[/]";
+
+    //        sessionTable.AddRow(session.Id.ToString(), movieTitle, session.Date.ToString("yyyy-MM-dd HH:mm"), session.TicketPrice.ToString("C"), session.AvailibleSeats.ToString());
+    //    }
+
+    //    AnsiConsole.Write(sessionTable);
+
+    //    // Wybór sesji na podstawie ID
+    //    var selectedSessionId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID sesji, aby zarezerwować bilet:[/]")
+    //            .AddChoices(sessions.Select(s => s.Id))
+    //    );
+
+    //    // Wprowadzenie ilości miejsc
+    //    var numberOfSeats = AnsiConsole.Ask<int>("[green]Wprowadź ilość miejsc:[/]");
+
+    //    // Znalezienie wybranej sesji
+    //    var selectedSession = sessions.FirstOrDefault(s => s.Id == selectedSessionId);
+
+    //    if (selectedSession == null || selectedSession.AvailibleSeats < numberOfSeats)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Niewystarczająca ilość dostępnych miejsc.[/]");
+    //        return;
+    //    }
+
+    //    // Utworzenie obiektu biletu
+    //    var ticketDto = new ticketDto
+    //    {
+    //        SessionId = selectedSession.Id,
+    //        NumberOfSeats = numberOfSeats,
+    //        Seat = "A1", // Przykładowe miejsce, tutaj można wprowadzić logikę wyboru miejsca
+    //        Status = "Reserved",
+    //        Price = selectedSession.TicketPrice * numberOfSeats,
+    //        UserId = loggedInUser.Id // Użycie ID zalogowanego użytkownika
+    //    };
+
+    //    var ticketController = new TicketController(context);
+    //    await ticketController.CreateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla zalogowanego użytkownika![/]");
+    //}
+
+    //static async Task BookTicket(ApplicationContext context, User loggedInUser)
+    //{
+    //    if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą rezerwować bilety.[/]");
+    //        return;
+    //    }
+
+    //    // Pobranie listy sesji z informacjami o filmach
+    //    var sessionController = new SessionController(context);
+    //    var sessions = await sessionController.GetSessionAsync();
+
+    //    if (sessions == null || sessions.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie dostępnych filmów z sesjami
+    //    var moviesWithSessions = sessions
+    //        .Select(s => new { Session = s, Movie = context.Movies.Find(s.MovieId) })
+    //        .Where(m => m.Movie != null)
+    //        .ToList();
+
+    //    var movieTable = new Table().Border(TableBorder.Rounded);
+    //    movieTable.AddColumn("[u]Tytuł Filmu[/]");
+    //    movieTable.AddColumn("[u]Data Sesji[/]");
+    //    movieTable.AddColumn("[u]Cena biletu[/]");
+    //    movieTable.AddColumn("[u]Dostępne miejsca[/]");
+
+    //    foreach (var item in moviesWithSessions)
+    //    {
+    //        movieTable.AddRow(
+    //            item.Movie.Title,
+    //            item.Session.Date.ToString("yyyy-MM-dd HH:mm"),
+    //            item.Session.TicketPrice.ToString("C"),
+    //            item.Session.AvailibleSeats.ToString()
+    //        );
+    //    }
+
+    //    AnsiConsole.Write(movieTable);
+
+    //    // Wybór filmu po nazwie
+    //    var selectedMovieTitle = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Wybierz film, aby zarezerwować bilet:[/]")
+    //            .AddChoices(moviesWithSessions.Select(m => m.Movie.Title).Distinct())
+    //    );
+
+    //    // Pobranie dostępnych sesji dla wybranego filmu
+    //    var availableSessions = moviesWithSessions
+    //        .Where(m => m.Movie.Title == selectedMovieTitle)
+    //        .Select(m => m.Session)
+    //        .ToList();
+
+    //    if (!availableSessions.Any())
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji dla wybranego filmu.[/]");
+    //        return;
+    //    }
+
+    //    // Wybór daty sesji dla wybranego filmu
+    //    var selectedSessionDate = AnsiConsole.Prompt(
+    //        new SelectionPrompt<DateTime>()
+    //            .Title("[green]Wybierz datę sesji:[/]")
+    //            .AddChoices(availableSessions.Select(s => s.Date))
+    //    );
+
+    //    // Znalezienie wybranej sesji na podstawie wybranej daty
+    //    var selectedSession = availableSessions.First(s => s.Date == selectedSessionDate);
+
+    //    // Wprowadzenie liczby miejsc
+    //    var numberOfSeats = AnsiConsole.Ask<int>("[green]Wprowadź ilość miejsc:[/]");
+
+    //    if (selectedSession.AvailibleSeats < numberOfSeats)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Niewystarczająca ilość dostępnych miejsc.[/]");
+    //        return;
+    //    }
+
+    //    // Wybór konkretnego miejsca (można rozszerzyć o logikę sprawdzenia dostępności miejsc)
+    //    var seat = AnsiConsole.Ask<string>("[green]Podaj miejsce (np. A1):[/]");
+
+    //    // Opcjonalny wybór statusu biletu
+    //    var status = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Wybierz status biletu:[/]")
+    //            .AddChoices(new[] { "Reserved", "Paid", "Cancelled" })
+    //    );
+
+    //    // Utworzenie biletu
+    //    var ticketDto = new ticketDto
+    //    {
+    //        SessionId = selectedSession.Id,
+    //        NumberOfSeats = numberOfSeats,
+    //        Seat = seat,
+    //        Status = status,
+    //        Price = selectedSession.TicketPrice * numberOfSeats,
+    //        UserId = loggedInUser.Id // Przypisanie ID zalogowanego użytkownika
+    //    };
+
+    //    var ticketController = new TicketController(context);
+    //    await ticketController.CreateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla zalogowanego użytkownika![/]");
+    //}
+
+    //static async Task BookTicket(ApplicationContext context, User loggedInUser)
+    //{
+    //    if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą rezerwować bilety.[/]");
+    //        return;
+    //    }
+
+    //    // Pobranie listy sesji z informacjami o filmach
+    //    var sessionController = new SessionController(context);
+    //    var sessions = await sessionController.GetSessionAsync();
+
+    //    if (sessions == null || sessions.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie dostępnych filmów z sesjami
+    //    var moviesWithSessions = sessions
+    //        .Select(s => new { Session = s, Movie = context.Movies.Find(s.MovieId) })
+    //        .Where(m => m.Movie != null)
+    //        .ToList();
+
+    //    var movieTable = new Table().Border(TableBorder.Rounded);
+    //    movieTable.AddColumn("[u]Tytuł Filmu[/]");
+    //    movieTable.AddColumn("[u]Data Sesji[/]");
+    //    movieTable.AddColumn("[u]Cena biletu[/]");
+    //    movieTable.AddColumn("[u]Dostępne miejsca[/]");
+
+    //    foreach (var item in moviesWithSessions)
+    //    {
+    //        movieTable.AddRow(
+    //            item.Movie.Title,
+    //            item.Session.Date.ToString("yyyy-MM-dd HH:mm"),
+    //            item.Session.TicketPrice.ToString("C"),
+    //            item.Session.AvailibleSeats.ToString()
+    //        );
+    //    }
+
+    //    AnsiConsole.Write(movieTable);
+
+    //    // Wybór filmu po nazwie
+    //    var selectedMovieTitle = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Wybierz film, aby zarezerwować bilet:[/]")
+    //            .AddChoices(moviesWithSessions.Select(m => m.Movie.Title).Distinct())
+    //    );
+
+    //    // Pobranie dostępnych sesji dla wybranego filmu
+    //    var availableSessions = moviesWithSessions
+    //        .Where(m => m.Movie.Title == selectedMovieTitle)
+    //        .Select(m => m.Session)
+    //        .ToList();
+
+    //    if (!availableSessions.Any())
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji dla wybranego filmu.[/]");
+    //        return;
+    //    }
+
+    //    // Wybór daty sesji dla wybranego filmu
+    //    var selectedSessionDate = AnsiConsole.Prompt(
+    //        new SelectionPrompt<DateTime>()
+    //            .Title("[green]Wybierz datę sesji:[/]")
+    //            .AddChoices(availableSessions.Select(s => s.Date))
+    //    );
+
+    //    // Znalezienie wybranej sesji na podstawie wybranej daty
+    //    var selectedSession = availableSessions.First(s => s.Date == selectedSessionDate);
+
+    //    // Pobranie istniejących biletów dla tej sesji w celu sprawdzenia zajętości miejsc
+    //    var ticketController = new TicketController(context);
+    //    var existingTickets = await ticketController.GetTicketsBySessionIdAsync(selectedSession.Id);
+
+    //    // Wprowadzenie liczby miejsc
+    //    var numberOfSeats = AnsiConsole.Ask<int>("[green]Wprowadź ilość miejsc:[/]");
+
+    //    if (selectedSession.AvailibleSeats < numberOfSeats)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Niewystarczająca ilość dostępnych miejsc.[/]");
+    //        return;
+    //    }
+
+    //    // Wybór konkretnego miejsca (sprawdzanie, czy miejsce jest już zajęte)
+    //    string seat;
+    //    do
+    //    {
+    //        seat = AnsiConsole.Ask<string>("[green]Podaj miejsce (np. A1):[/]");
+    //        if (existingTickets.Any(t => t.Seat == seat))
+    //        {
+    //            AnsiConsole.MarkupLine($"[red]Miejsce {seat} jest już zajęte. Wybierz inne miejsce.[/]");
+    //        }
+    //    } while (existingTickets.Any(t => t.Seat == seat));
+
+    //    // Opcjonalny wybór statusu biletu
+    //    var status = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Wybierz status biletu:[/]")
+    //            .AddChoices(new[] { "Reserved", "Paid", "Cancelled" })
+    //    );
+
+    //    // Utworzenie biletu
+    //    var ticketDto = new ticketDto
+    //    {
+    //        SessionId = selectedSession.Id,
+    //        NumberOfSeats = numberOfSeats,
+    //        Seat = seat,
+    //        Status = status,
+    //        Price = selectedSession.TicketPrice * numberOfSeats,
+    //        UserId = loggedInUser.Id // Przypisanie ID zalogowanego użytkownika
+    //    };
+
+    //    await ticketController.CreateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla zalogowanego użytkownika![/]");
+    //}
+
+    //static async Task EditTicket(ApplicationContext context)
+    //{
+    //    var userController = new UserController(context);
+    //    var users = await userController.GetUserAsync();
+
+    //    if (users == null || users.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z użytkownikami
+    //    var userTable = new Table().Border(TableBorder.Rounded);
+    //    userTable.AddColumn("[u]ID[/]");
+    //    userTable.AddColumn("[u]Imię[/]");
+    //    userTable.AddColumn("[u]Nazwisko[/]");
+    //    userTable.AddColumn("[u]Email[/]");
+
+    //    foreach (var user in users)
+    //    {
+    //        userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+    //    }
+
+    //    AnsiConsole.Write(userTable);
+
+    //    var userId = AnsiConsole.Ask<Guid>("[green]Podaj ID użytkownika, aby pobrać jego bilety:[/]");
+    //    var ticketController = new TicketController(context);
+    //    var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
+
+    //    if (tickets == null || tickets.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do edycji dla tego użytkownika.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z biletami
+    //    var table = new Table().Border(TableBorder.Rounded);
+    //    table.AddColumn("[u]ID[/]");
+    //    table.AddColumn("[u]Seat[/]");
+    //    table.AddColumn("[u]Status[/]");
+    //    table.AddColumn("[u]Price[/]");
+
+    //    foreach (var ticket in tickets)
+    //    {
+    //        table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.Price.ToString("C"));
+    //    }
+
+    //    AnsiConsole.Write(table);
+
+    //    // Pobranie ID biletu do edycji
+    //    var ticketId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID biletu do edycji:[/]")
+    //            .AddChoices(tickets.Select(t => t.Id))
+    //    );
+
+    //    // Pobranie nowych danych od użytkownika
+    //    string seat = AnsiConsole.Ask<string>("[green]Podaj nowe miejsce:[/]");
+    //    string status = AnsiConsole.Ask<string>("[green]Podaj nowy status (np. 'Reserved', 'Cancelled'):[/]");
+    //    double price = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+    //    int numberOfSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę miejsc:[/]");
+
+    //    var ticketDto = new ticketDto
+    //    {
+    //        Id = ticketId,
+    //        Seat = seat,
+    //        Status = status,
+    //        Price = price,
+    //        NumberOfSeats = numberOfSeats
+    //    };
+
+    //    await ticketController.UpdateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
+    //}
+
     static async Task BookTicket(ApplicationContext context, User loggedInUser)
     {
         if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
@@ -607,9 +1078,8 @@ class Program
         AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zarezerwowany dla zalogowanego użytkownika![/]");
     }
 
-             
+             // Generowanie listy miejsc od A1 do J10
     static List<string> GenerateSeatChoices()
-    // Generowanie listy miejsc od A1 do J10
     {
         var seatChoices = new List<string>();
         for (char row = 'A'; row <= 'J'; row++)
@@ -622,7 +1092,305 @@ class Program
         return seatChoices;
     }
 
-  
+    ///* dobre*/ static async Task EditTicket(ApplicationContext context, User loggedInUser)
+    // {
+    //     AnsiConsole.MarkupLine("[blue]Wywołano metodę EditTicket[/]");
+
+    //     // Sprawdzenie, czy użytkownik ma rolę "user"
+    //     if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //     {
+    //         AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą edytować bilety.[/]");
+    //         return;
+    //     }
+    //     AnsiConsole.MarkupLine("[blue]Zalogowany użytkownik ma rolę 'user'[/]");
+
+    //     var ticketController = new TicketController(context);
+    //     var tickets = await ticketController.GetTicketsByUserIdAsync(loggedInUser.Id);
+
+    //     // Sprawdzenie, czy są dostępne bilety do edycji
+    //     if (tickets == null || tickets.Count == 0)
+    //     {
+    //         AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do edycji dla tego użytkownika.[/]");
+    //         return;
+    //     }
+    //     AnsiConsole.MarkupLine("[blue]Znaleziono bilety użytkownika[/]");
+
+    //     // Wyświetlenie tabeli z biletami użytkownika
+    //     var table = new Table().Border(TableBorder.Rounded);
+    //     table.AddColumn("[u]ID[/]");
+    //     table.AddColumn("[u]Seat[/]");
+    //     table.AddColumn("[u]Status[/]");
+    //     // table.AddColumn("[u]Price[/]");
+
+    //     foreach (var ticket in tickets)
+    //     {
+    //         table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status);
+    //     }
+
+    //     AnsiConsole.Write(table);
+    //     AnsiConsole.MarkupLine("[blue]Wyświetlono listę biletów[/]");
+
+    //     // Wybór biletu do edycji
+    //     var ticketId = AnsiConsole.Prompt(
+    //         new SelectionPrompt<Guid>()
+    //             .Title("[green]Wybierz ID biletu do edycji:[/]")
+    //             .AddChoices(tickets.Select(t => t.Id))
+    //     );
+
+    //     AnsiConsole.MarkupLine($"[blue]Wybrano bilet o ID: {ticketId}[/]");
+
+    //     // Pobranie istniejącego biletu z bazy danych
+    //     var existingTicket = await ticketController.GetTicketByIdAsync(ticketId);
+    //     if (existingTicket == null)
+    //     {
+    //         AnsiConsole.MarkupLine("[red]Nie znaleziono wybranego biletu.[/]");
+    //         return;
+    //     }
+
+    //     var seat = AnsiConsole.Prompt(
+    //         new SelectionPrompt<string>()
+    //             .Title("[green]Podaj nowe miejsce (np. A1, B5):[/]")
+    //             .AddChoices(GenerateSeatChoices())
+    //     );
+
+    //     //  string seat = AnsiConsole.Ask<string>("[green]Podaj nowe miejsce:[/]");
+    //     string status = AnsiConsole.Prompt(
+    //         new SelectionPrompt<string>()
+    //             .Title("[green]Podaj nowy status biletu (np. 'Reserved', 'Cancelled'):[/]")
+    //             .AddChoices("Reserved", "Cancelled", "Paid")
+    //     );
+    //     //  double price = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+    //     int numberOfSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę miejsc:[/]");
+
+    //     var ticketDto = new ticketDto
+    //     {
+    //         Id = ticketId,
+    //         Seat = seat,
+    //         Status = status,
+    //         //   Price = price,
+    //         NumberOfSeats = numberOfSeats,
+    //         SessionId = existingTicket.SessionId, // Ustawienie istniejącego SessionId
+    //         UserId = existingTicket.UserId // Ustawienie istniejącego UserId
+    //     };
+
+    //     await ticketController.UpdateTicketAsync(ticketDto);
+    //     AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
+    // }
+    void a21() { }
+    //static async Task EditTicket(ApplicationContext context, User loggedInUser)
+    //{
+    //    if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą edytować bilety.[/]");
+    //        return;
+    //    }
+
+    //    var ticketController = new TicketController(context);
+    //    var tickets = await ticketController.GetTicketsByUserIdAsync(loggedInUser.Id);
+
+    //    if (tickets == null || tickets.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do edycji dla tego użytkownika.[/]");
+    //        return;
+    //    }
+
+    //    var table = new Table().Border(TableBorder.Rounded);
+    //    table.AddColumn("[u]ID[/]");
+    //    table.AddColumn("[u]Seat[/]");
+    //    table.AddColumn("[u]Status[/]");
+    //    table.AddColumn("[u]Liczba miejsc[/]");
+
+    //    foreach (var ticket in tickets)
+    //    {
+    //        table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.NumberOfSeats.ToString());
+    //    }
+
+    //    AnsiConsole.Write(table);
+
+    //    // Wybór biletu do edycji
+    //    var ticketId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID biletu do edycji:[/]")
+    //            .AddChoices(tickets.Select(t => t.Id))
+    //    );
+
+    //    // Pobranie biletu do edycji
+    //    var selectedTicket = tickets.First(t => t.Id == ticketId);
+    //    int originalNumberOfSeats = selectedTicket.NumberOfSeats;
+
+    //    AnsiConsole.MarkupLine($"[blue]Liczba miejsc w wybranym bilecie: {originalNumberOfSeats}[/]");
+
+    //    // Wybór nowych miejsc, zgodnie z oryginalną liczbą miejsc
+    //    var seats = AnsiConsole.Prompt(
+    //        new MultiSelectionPrompt<string>()
+    //            .Title($"[green]Wybierz {originalNumberOfSeats} nowe miejsce(-a):[/]")
+    //            .AddChoices(GenerateSeatChoices())
+    //            .PageSize(10)
+    //            .Required() // wymaga wyboru
+    //            .MinimumSelectionCount(originalNumberOfSeats)
+    //            .MaximumSelectionCount(originalNumberOfSeats)
+    //    );
+
+    //    string status = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Podaj nowy status biletu (np. 'Reserved', 'Cancelled'):[/]")
+    //            .AddChoices("Reserved", "Cancelled", "Paid")
+    //    );
+
+    //    var ticketDto = new ticketDto
+    //    {
+    //        Id = ticketId,
+    //        Seat = string.Join(", ", seats), // Zapisanie miejsc jako łańcuch (np. "A1, A2")
+    //        Status = status,
+    //        NumberOfSeats = originalNumberOfSeats // Liczba miejsc pozostaje taka sama
+    //    };
+
+    //    await ticketController.UpdateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
+    //}
+
+    // Funkcja generująca dostępne miejsca
+    //static IEnumerable<string> GenerateSeatChoices()
+    //{
+    //    var rows = "ABCDEFGHIJ";
+    //    for (int row = 0; row < rows.Length; row++)
+    //    {
+    //        for (int seat = 1; seat <= 10; seat++)
+    //        {
+    //            yield return $"{rows[row]}{seat}";
+    //        }
+    //    }
+    //}
+    void a23() { }
+
+    void a() { }
+    //static async Task EditTicket(ApplicationContext context, User loggedInUser)
+    //{
+    //    if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Tylko zalogowani użytkownicy mogą edytować bilety.[/]");
+    //        return;
+    //    }
+
+    //    var ticketController = new TicketController(context);
+    //    var tickets = await ticketController.GetTicketsByUserIdAsync(loggedInUser.Id);
+
+    //    if (tickets == null || tickets.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do edycji dla tego użytkownika.[/]");
+    //        return;
+    //    }
+
+    //    var table = new Table().Border(TableBorder.Rounded);
+    //    table.AddColumn("[u]ID[/]");
+    //    table.AddColumn("[u]Seat[/]");
+    //    table.AddColumn("[u]Status[/]");
+    //    // table.AddColumn("[u]Price[/]");
+
+    //    foreach (var ticket in tickets)
+    //    {
+    //        table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status);
+    //    }
+
+    //    AnsiConsole.Write(table);
+
+    //    var ticketId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID biletu do edycji:[/]")
+    //            .AddChoices(tickets.Select(t => t.Id))
+    //    );
+
+    //    // Wybór miejsca z ograniczoną listą
+    //    var seat = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Podaj nowe miejsce (np. A1, B5):[/]")
+    //            .AddChoices(GenerateSeatChoices())
+    //    );
+
+    //    string status = AnsiConsole.Prompt(
+    //        new SelectionPrompt<string>()
+    //            .Title("[green]Podaj nowy status biletu (np. 'Reserved', 'Cancelled'):[/]")
+    //            .AddChoices("Reserved", "Cancelled", "Paid")
+    //    );
+    //    // double price = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+    //    int numberOfSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę miejsc:[/]");
+
+    //    var ticketDto = new ticketDto
+    //    {
+    //        Id = ticketId,
+    //        Seat = seat,
+    //        Status = status,
+    //        //  Price = price,
+    //        NumberOfSeats = numberOfSeats
+    //    };
+
+    //    await ticketController.UpdateTicketAsync(ticketDto);
+    //    AnsiConsole.MarkupLine("[bold green]Bilet został pomyślnie zaktualizowany![/]");
+    //}
+
+
+    //static async Task DeleteTicket(ApplicationContext context)
+    //{
+    //    var userController = new UserController(context);
+    //    var users = await userController.GetUserAsync();
+
+    //    if (users == null || users.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych użytkowników.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z użytkownikami
+    //    var userTable = new Table().Border(TableBorder.Rounded);
+    //    userTable.AddColumn("[u]ID[/]");
+    //    userTable.AddColumn("[u]Imię[/]");
+    //    userTable.AddColumn("[u]Nazwisko[/]");
+    //    userTable.AddColumn("[u]Email[/]");
+
+    //    foreach (var user in users)
+    //    {
+    //        userTable.AddRow(user.Id.ToString(), user.Name, user.LastName, user.Email);
+    //    }
+
+    //    AnsiConsole.Write(userTable);
+
+    //    var userId = AnsiConsole.Ask<Guid>("[green]Podaj ID użytkownika, aby pobrać jego bilety:[/]");
+    //    var ticketController = new TicketController(context);
+    //    var tickets = await ticketController.GetTicketsByUserIdAsync(userId);
+
+    //    if (tickets == null || tickets.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych biletów do usunięcia dla tego użytkownika.[/]");
+    //        return;
+    //    }
+
+    //    // Wyświetlenie tabeli z biletami
+    //    var table = new Table().Border(TableBorder.Rounded);
+    //    table.AddColumn("[u]ID[/]");
+    //    table.AddColumn("[u]Seat[/]");
+    //    table.AddColumn("[u]Status[/]");
+    //    table.AddColumn("[u]Price[/]");
+
+    //    foreach (var ticket in tickets)
+    //    {
+    //        table.AddRow(ticket.Id.ToString(), ticket.Seat, ticket.Status, ticket.Price.ToString("C"));
+    //    }
+
+    //    AnsiConsole.Write(table);
+
+    //    // Pobranie ID biletu do usunięcia
+    //    var ticketId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID biletu do usunięcia:[/]")
+    //            .AddChoices(tickets.Select(t => t.Id))
+    //    );
+
+    //    await ticketController.DeleteTicketByIdAsync(ticketId);
+    //    AnsiConsole.MarkupLine("[bold red]Bilet został pomyślnie usunięty![/]");
+    //}
+    //session
+    void a2() { }
+
     static async Task EditTicket(ApplicationContext context, User loggedInUser)
     {
         if (string.IsNullOrEmpty(loggedInUser?.Role) || loggedInUser.Role != "user")
@@ -813,7 +1581,85 @@ class Program
     }
 
 
-    
+    //static async Task AddSession(ApplicationContext context)
+    //{
+    //    // Wyświetlenie listy filmów
+    //    var movieController = new MovieController(context);
+    //    var movies = await movieController.GetMoviesAsync();
+
+    //    if (movies == null || movies.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych filmów.[/]");
+    //        return;
+    //    }
+
+    //    var movieTable = new Table().Border(TableBorder.Rounded);
+    //    movieTable.AddColumn("[u]ID[/]");
+    //    movieTable.AddColumn("[u]Tytuł[/]");
+    //    movieTable.AddColumn("[u]Gatunek[/]");
+    //    movieTable.AddColumn("[u]Reżyser[/]");
+
+    //    foreach (var movie in movies)
+    //    {
+    //        movieTable.AddRow(movie.Id.ToString(), movie.Title, movie.Genre, movie.Director);
+    //    }
+
+    //    AnsiConsole.Write(movieTable);
+
+    //    // Wybór filmu
+    //    var movieId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID filmu:[/]")
+    //            .AddChoices(movies.Select(m => m.Id))
+    //    );
+
+    //    // Wyświetlenie listy sal
+    //    var hallController = new HallController(context);
+    //    var halls = await hallController.GetHallsAsync();
+
+    //    if (halls == null || halls.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sal.[/]");
+    //        return;
+    //    }
+
+    //    var hallTable = new Table().Border(TableBorder.Rounded);
+    //    hallTable.AddColumn("[u]ID[/]");
+    //    hallTable.AddColumn("[u]Numer[/]");
+    //    hallTable.AddColumn("[u]Liczba miejsc[/]");
+
+    //    foreach (var hall in halls)
+    //    {
+    //        hallTable.AddRow(hall.Id.ToString(), hall.Number, hall.Seats.ToString());
+    //    }
+
+    //    AnsiConsole.Write(hallTable);
+
+    //    // Wybór sali
+    //    var hallId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID sali:[/]")
+    //            .AddChoices(halls.Select(h => h.Id))
+    //    );
+
+    //    // Pobranie danych sesji
+    //    var sessionDate = AnsiConsole.Ask<DateTime>("[green]Podaj datę sesji (yyyy-MM-dd HH:mm):[/]");
+    //    var ticketPrice = AnsiConsole.Ask<double>("[green]Podaj cenę biletu:[/]");
+    //    var availableSeats = AnsiConsole.Ask<int>("[green]Podaj liczbę dostępnych miejsc:[/]");
+
+    //    var sessionDto = new sessionDto
+    //    {
+    //        MovieId = movieId,
+    //        HallId = hallId,
+    //        Date = sessionDate,
+    //        TicketPrice = ticketPrice,
+    //        AvailibleSeats = availableSeats
+    //    };
+
+    //    var sessionController = new SessionController(context);
+    //    await sessionController.CreateSessionAsync(sessionDto);
+    //    AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie dodana![/]");
+    //}
     static async Task AddSession(ApplicationContext context)
     {
         // Wyświetlenie listy filmów
@@ -894,7 +1740,63 @@ class Program
         AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie dodana![/]");
     }
 
+    //static async Task EditSession(ApplicationContext context)
+    //{
+    //    // Wyświetlenie listy sesji
+    //    var sessionController = new SessionController(context);
+    //    var sessions = await sessionController.GetSessionAsync();
 
+    //    if (sessions == null || sessions.Count == 0)
+    //    {
+    //        AnsiConsole.MarkupLine("[red]Brak dostępnych sesji do edycji.[/]");
+    //        return;
+    //    }
+
+    //    var sessionTable = new Table().Border(TableBorder.Rounded);
+    //    sessionTable.AddColumn("[u]ID[/]");
+    //    sessionTable.AddColumn("[u]Film ID[/]");
+    //    sessionTable.AddColumn("[u]Sala ID[/]");
+    //    sessionTable.AddColumn("[u]Data[/]");
+    //    sessionTable.AddColumn("[u]Cena biletu[/]");
+    //    sessionTable.AddColumn("[u]Dostępne miejsca[/]");
+
+    //    foreach (var session in sessions)
+    //    {
+    //        sessionTable.AddRow(
+    //            session.Id.ToString(),
+    //            session.MovieId.ToString(),
+    //            session.HallId.ToString(),
+    //            session.Date.ToString("yyyy-MM-dd HH:mm"),
+    //            session.TicketPrice.ToString("C"),
+    //            session.AvailibleSeats.ToString()
+    //        );
+    //    }
+
+    //    AnsiConsole.Write(sessionTable);
+
+    //    // Wybór sesji do edycji
+    //    var sessionId = AnsiConsole.Prompt(
+    //        new SelectionPrompt<Guid>()
+    //            .Title("[green]Wybierz ID sesji do edycji:[/]")
+    //            .AddChoices(sessions.Select(s => s.Id))
+    //    );
+
+    //    // Pobranie nowych danych sesji
+    //    var sessionDate = AnsiConsole.Ask<DateTime>("[green]Podaj nową datę sesji (yyyy-MM-dd HH:mm):[/]");
+    //    var ticketPrice = AnsiConsole.Ask<double>("[green]Podaj nową cenę biletu:[/]");
+    // //   var availableSeats = AnsiConsole.Ask<int>("[green]Podaj nową liczbę dostępnych miejsc:[/]");
+
+    //    var sessionDto = new sessionDto
+    //    {
+    //        Id = sessionId,
+    //        Date = sessionDate,
+    //        TicketPrice = ticketPrice,
+    //       // AvailibleSeats = availableSeats
+    //    };
+
+    //    await sessionController.UpdateSessionAsync(sessionDto);
+    //    AnsiConsole.MarkupLine("[bold green]Sesja została pomyślnie zaktualizowana![/]");
+    //}
 
     static async Task EditSession(ApplicationContext context)
     {
@@ -1321,7 +2223,36 @@ class Program
         AnsiConsole.MarkupLine("[bold red]Sala została pomyślnie usunięta![/]");
     }
     //users
-   
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    //static async Task<User> LoginUser(ApplicationContext context)
+    //{
+    //    string email = AnsiConsole.Ask<string>("[green]Wprowadź email:[/]");
+    //    string password = AnsiConsole.Prompt(
+    //        new TextPrompt<string>("[green]Wprowadź hasło:[/]")
+    //            .PromptStyle("red")
+    //            .Secret()
+    //    );
+
+    //    var loginController = new LoginController(context);
+    //    var result = await loginController.Login(new Login { Email = email, Password = password });
+
+    //    if (result is OkObjectResult okResult)
+    //    {
+    //        var response = JObject.FromObject(okResult.Value);
+    //        var userResponse = response["User"]?.ToObject<User>();
+    //        return userResponse;
+    //    }
+    //    else
+    //    {
+    //        AnsiConsole.MarkupLine("[bold red]Niepoprawne dane logowania.[/]");
+    //        return null;
+    //    }
+    //}
+
     static async Task<User> LoginUser(ApplicationContext context)
     {
         while (true)
