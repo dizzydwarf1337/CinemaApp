@@ -10,6 +10,14 @@ builder.Services.AddDbContext<ApplicationContext>(opt =>
 
     opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CinemaApp;Trusted_Connection=True;MultipleActiveResultSets=true")
 );
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,7 +39,6 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        // Логирование ошибок
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred seeding the DB.");
     }
@@ -39,5 +46,5 @@ using (var scope = app.Services.CreateScope())
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.UseCors("CorsPolicy");
 app.Run();

@@ -81,6 +81,7 @@ namespace CinemaApp.Controllers
             _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
         }
+        [HttpGet("/session/${sessionId}")]
         public async Task<List<Ticket>> GetTicketsBySessionIdAsync(Guid sessionId)
         {
             return await _context.Tickets

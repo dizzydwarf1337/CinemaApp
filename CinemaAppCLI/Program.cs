@@ -21,7 +21,7 @@ class Program
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
-    private const int SW_MAXIMIZE = 3;
+    private const int SW_MAXIMIZE = 1;
 
     static async Task Main(string[] args)
     {
@@ -37,7 +37,7 @@ class Program
 
         // Tworzenie opcji dla ApplicationContext
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
-        optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CinemaApp;Trusted_Connection=True;MultipleActiveResultSets=true");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=CinemaApp;Trusted_Connection=True;MultipleActiveResultSets=true");
         var context = new ApplicationContext(optionsBuilder.Options);
         User user = new User{ Role=" "};
         bool exit = false;

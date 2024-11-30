@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="client-app\src\assets\API\" />
+    <Folder Include="client-app\src\features\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
