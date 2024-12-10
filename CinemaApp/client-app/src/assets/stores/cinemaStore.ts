@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable} from "mobx";
 import cinema from "../models/cinema";
 import hall from "../models/hall";
 import session from "../models/session";
@@ -8,7 +8,9 @@ import agent from "../API/agent";
 export default class CinemaStore  {
     constructor() {
         makeAutoObservable(this);
-        this.loadAllData();
+        this.setLoading(true);
+        this.initialize();
+        this.setLoading(false);
     }
     cinemas: cinema[] = [];
     cinema: cinema | null = null;
@@ -27,15 +29,18 @@ export default class CinemaStore  {
     setCinemas = (cinemas: cinema[]) => {
         this.cinemas = cinemas;
     }
-    loadCinemas = async () => {
+    getCinemaApi = async (id: string) => {
         this.setLoading(true);
-        agent.Cinemas.getCinemas().then((cinemas) => { this.setCinemas(cinemas) }).
-            catch((error) => { console.log("error while loadingCinemas ", error) })
-            .finally(() =>this.setLoading(false));
+        agent.Cinemas.getCinemaById(id).then((cinema) => { return cinema }).catch((error) => { console.log("error while getting cinema: ", error); return null; }).finally(() => this.setLoading(false));
     }
-    createCinema = async (cinema: cinema) => {
+    loadCinemas = async () => {
+        agent.Cinemas.getCinemas().then((cinemas) => { this.setCinemas(cinemas) }).
+            catch((error) => { console.log("error while loadingCinemas ", error) });
+    }
+    createCinema = async (cinemaDto: cinema,numOfHalls:Number,file?:File) => {
         this.setLoading(true);
-        agent.Cinemas.createCinema(cinema).then(() => { this.setCinemas([...this.cinemas, cinema]) })
+        console.log(cinemaDto, numOfHalls);
+        agent.Cinemas.createCinema(cinemaDto, numOfHalls).then(async (cinema) => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Cinemas.uploadImage(cinema.id, formData); } this.setCinemas([...this.cinemas, cinema]) })
             .catch((error) => { console.log("error while creating cinema: ", error) })
             .finally(()=>this.setLoading(false));
     }
@@ -45,9 +50,10 @@ export default class CinemaStore  {
             .catch((error) => { console.log("error while deleting cinema: ", error) })
             .finally(() => this.setLoading(false));
     }
-    updateCinema = async (cinema: cinema) => {
+    updateCinema = async (cinema: cinema, file?:File) => {
         this.setLoading(true);
-        agent.Cinemas.updateCinema(cinema).then(() => { this.setCinemas([...this.cinemas.filter(x => x.id !== cinema.id), cinema]) })
+        cinema.imagePath = "";
+        agent.Cinemas.updateCinema(cinema).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file);  await agent.Cinemas.uploadImage(cinema.id, formData) }; this.setCinemas([...this.cinemas.filter(x => x.id !== cinema.id), cinema]) })
             .catch((error) => { console.log("error while updating cinema: ", error) })
             .finally(() => this.setLoading(false));
     }
@@ -62,11 +68,13 @@ export default class CinemaStore  {
     setHalls = (halls: hall[]) => {
         this.halls = halls;
     }
-    loadHalls = async () => {
+    getHallApi = async (id: string) => {
         this.setLoading(true);
+        agent.Halls.getHallById(id).then((hall) => { return hall }).catch((error) => { console.log("error while getting hall: ", error) }).finally(() => this.setLoading(false));
+    }
+    loadHalls = async () => {
         agent.Halls.getHalls().then((halls) => { this.setHalls(halls) })
-            .catch((error) => { console.log("error while loadingHalls ", error) })
-            .finally(() => { this.setLoading(false) });
+            .catch((error) => { console.log("error while loadingHalls ", error) });
     }
     createHall = async (hall: hall) => {
         this.setLoading(true);
@@ -93,21 +101,22 @@ export default class CinemaStore  {
     setHall = (hall: hall) => {
         this.hall = hall;
     }
-
-
     getMovies = () => this.movies;
     setMovies = (movies: movie[]) => {
         this.movies = movies;
     }
-    loadMovies = async () => {
+    getMovieApi = async (id: string) => {
         this.setLoading(true);
-        agent.Movies.getMovies().then((movies) => { this.setMovies(movies); })
-            .catch((error) => { console.log("error while loading movies: ", error) })
-            .finally(() => { this.setLoading(false) });
+        agent.Movies.getMovieById(id).then((movie) => { return movie }).catch((error) => { console.log("error while getting movie: ", error) }).finally(() => this.setLoading(false));
     }
-    createMovie = async (movie: movie) => {
+    loadMovies = async () => {
+        agent.Movies.getMovies().then((movies) => { this.setMovies(movies);  })
+            .catch((error) => { console.log("error while loading movies: ", error) });
+    }
+    createMovie = async (movie: movie,file?:File) => {
         this.setLoading(true);
-        agent.Movies.createMovie(movie).then(() => { this.setMovies([...this.movies, movie]) })
+        
+        agent.Movies.createMovie(movie).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id,formData) }; this.setMovies([...this.movies, movie]) })
             .catch((error) => { console.log("error while creating movie: ", error) })
             .finally(() => { this.setLoading(false) });
     }
@@ -117,9 +126,9 @@ export default class CinemaStore  {
             .catch((error) => { console.log("error while deleting movie: ", error) })
             .finally(() => { this.setLoading(false) });
     }
-    updateMovie = async (movie: movie) => {
+    updateMovie = async (movie: movie, file?:File) => {
         this.setLoading(true);
-        agent.Movies.updateMovie(movie).then(() => { this.setMovies([...this.movies.filter(x => x.id !== movie.id), movie]) })
+        agent.Movies.updateMovie(movie).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id, formData) }; this.setMovies([...this.movies.filter(x => x.id !== movie.id), movie]) })
             .catch((error) => { console.log("error while updating movie: ", error) })
             .finally(() => { this.setLoading(false) });
     }
@@ -134,11 +143,13 @@ export default class CinemaStore  {
     setSessions = (sessions: session[]) => {
         this.sessions = sessions;
     }
-    loadSessions = async () => {
+    getSessionApi = async (id: string) => {
         this.setLoading(true);
+        agent.Sessions.getSessionById(id).then((session) => { return session }).catch((error) => { console.log("error while getting session: ", error) }).finally(() => this.setLoading(false));
+    }
+    loadSessions = async () => {
         agent.Sessions.getSessions().then((sessions) => { this.setSessions(sessions); })
-            .catch((error) => { console.log("error while loading sessions: ", error) })
-            .finally(() => { this.setLoading(false) });
+            .catch((error) => { console.log("error while loading sessions: ", error) });
     }
     createSession = async (session: session) => {
         this.setLoading(true);
@@ -164,11 +175,10 @@ export default class CinemaStore  {
         this.session = session;
     }
 
-    loadAllData = async () => {
-        await Promise.all([
-            this.loadCinemas(),
-            this.loadHalls(),
-            this.loadMovies(),
-            this.loadSessions(),]);
+    initialize = async () => {
+        await this.loadCinemas();
+        await this.loadHalls();
+        await this.loadMovies();
+        await this.loadSessions();
     }
 }

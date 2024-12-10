@@ -36,10 +36,12 @@ const Users = {
 const Cinemas = {
     getCinemas: () => requests.get<cinema[]>('/cinema'),
     getCinemaById: (id: string) => requests.get<cinema>(`/cinema/${id}`),
-    createCinema: (cinema: cinema) => requests.post<void>('/cinema', cinema),
-    updateCinema: (cinema: cinema) => requests.put<void>(`/cinema/`, cinema),
+    createCinema: (cinemaDto: cinema, numOfHalls: Number) => requests.post<cinema>(`/cinema`, { cinemaDto: cinemaDto, numOfHalls: numOfHalls }),
+    updateCinema: (cinema: cinema) => requests.put<void>(`/cinema`, cinema),
     deleteCinema: (id: string) => requests.delete<void>(`/cinema/${id}`),
+    uploadImage: (id: string, file: FormData) => requests.put<void>(`/cinema/${id}`, file)
 };
+
 const Halls = {
     getHalls: () => requests.get<hall[]>('/hall'),
     getHallById: (id: string) => requests.get<hall>(`/hall/${id}`),
@@ -48,12 +50,14 @@ const Halls = {
     deleteHall: (id: string) => requests.delete<void>(`/hall/${id}`),
 }
 const Movies = {
-    getMovies: () => requests.get<hall[]>('/movie'),
+    getMovies: () => requests.get<movie[]>('/movie'),
     getMovieById: (id: string) => requests.get<movie>(`/movie/${id}`),
-    createMovie: (movie: movie) => requests.post<void>('/movie', movie),
-    updateMovie: (movie: movie) => requests.put<void>(`/movie/`, movie),
+    createMovie: (movie: movie) => requests.post<movie>(`/movie`,movie),
+    updateMovie: (movie: movie) => requests.put<void>(`/movie`, movie),
     deleteMovie: (id: string) => requests.delete<void>(`/movie/${id}`),
-}
+    uploadImage: (id: string, file: FormData) => requests.put<void>(`/movie/${id}`, file)
+};
+
 const Sessions = {
     getSessions: () => requests.get<session[]>('/session'),
     getSessionById: (id: string) => requests.get<session>(`/session/${id}`),

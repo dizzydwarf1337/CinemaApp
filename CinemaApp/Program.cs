@@ -1,11 +1,15 @@
 using CinemaApp.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddDbContext<ApplicationContext>(opt =>
 
     opt.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CinemaApp;Trusted_Connection=True;MultipleActiveResultSets=true")
@@ -14,10 +18,12 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+        policy.AllowAnyMethod()
+              .AllowAnyHeader()
+              .WithOrigins("http://localhost:3000");
     });
 });
-
+//builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +32,6 @@ if (!app.Environment.IsDevelopment())
 
 }
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();

@@ -1,0 +1,15 @@
+﻿.MuiTypography-root.MuiTypography-body1.navLink {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.MuiTypography-root.MuiTypography-body1.navLink:hover {
+    color: #f4b400; 
+}
+a {
+    text-decoration:none;
+}
+
+body {
+    background-color: #D4D8DF;
+}

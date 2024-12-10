@@ -30,11 +30,11 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     textDecoration: "none",
-                    border:"none",
+                    border: "none",
                     color: "#ffffff",
                     textTransform: "none",
                     borderRadius: "7px",
-                    fontSize:"1rem",
+                    fontSize: "1rem",
                 },
                 outlinedPrimary: {
                     boxShadow: "0px 0px 2.5px 1.5px #f4b400",
@@ -44,8 +44,15 @@ const theme = createTheme({
                         backgroundColor: "#f4b400",
                         color: "#1a202c",
                     },
+                },
+                containedSuccess: {
+                    backgroundColor: "#619129",
+
+                    '&:hover': {
+                        backgroundColor:"#74AC33",
+                    }
                 }
-            }
+            },
         }
     },
 });

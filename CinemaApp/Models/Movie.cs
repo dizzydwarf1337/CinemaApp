@@ -8,6 +8,7 @@
         public string Genre { get; set; }
         public string Director { get; set; }
         public TimeOnly Duration { get; set; }
+        public string? ImagePath { get; set; }
         public ICollection<Session> Sessions { get; set; }
     }
 }

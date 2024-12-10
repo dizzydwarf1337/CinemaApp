@@ -1,4 +1,6 @@
-﻿namespace CinemaApp.Models.Dtos
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace CinemaApp.Models.Dtos
 {
     public class movieDto
     {
@@ -8,6 +10,7 @@
         public string Genre { get; set; }
         public string Director { get; set; }
         public TimeOnly Duration { get; set; }
+        public string ImagePath { get; set; }
         public movieDto(Movie movie) 
         {
             this.Id = movie.Id;
@@ -15,6 +18,7 @@
             this.Description = movie.Description;
             this.Genre = movie.Genre;
             this.Director = movie.Director;
+            this.ImagePath = movie.ImagePath;
             this.Duration = movie.Duration;
         }
         public movieDto() { }

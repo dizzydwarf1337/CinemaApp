@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="client-app\public\images\" />
     <Folder Include="client-app\src\assets\API\" />
-    <Folder Include="client-app\src\features\" />
+    <Folder Include="client-app\src\features\cinema\cinemaDetails\" />
+    <Folder Include="client-app\src\features\cinema\Form\" />
+    <Folder Include="client-app\src\features\movies\movieDetails\" />
     <Folder Include="Views\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>

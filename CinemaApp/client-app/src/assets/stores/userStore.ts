@@ -13,12 +13,13 @@ export default class UserStore  {
             const ticketsData = JSON.parse(localStorage.getItem('tickets')!);
             console.log("userData:", userData); 
             console.log("ticketsData:", ticketsData);
+            this.setIsLoggedIn(login);
             if (userData) {
                 this.setUser(userData);  
             }
 
             if (ticketsData) {
-                this.setTickets(JSON.parse(ticketsData));  
+                this.setTickets(ticketsData);  
             }
         }
     }
