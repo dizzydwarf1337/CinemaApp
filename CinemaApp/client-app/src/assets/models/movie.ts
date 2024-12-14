@@ -5,6 +5,6 @@ export default interface Movie {
     description: string,
     genre: string,
     director: string,
-    duration: Date,
+    duration: Date |string,
     imagePath?: string,
 }

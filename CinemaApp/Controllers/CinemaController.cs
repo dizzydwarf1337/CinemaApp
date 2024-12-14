@@ -67,10 +67,24 @@ namespace CinemaApp.Controllers
         public async Task<IActionResult> UploadImageAsync(Guid id, IFormFile? formFile)
         {
             var cinema = await _context.Cinemas.FindAsync(id);
+            if (cinema == null)
+            {
+                return NotFound("Cinema not found");
+            }
+
             string? imagePath = null;
 
             if (formFile != null)
             {
+                if (!string.IsNullOrEmpty(cinema.ImagePath))
+                {
+                    var oldImagePath = Path.Combine("client-app", "public", cinema.ImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
                 var fileName = $"{Guid.NewGuid()}_{formFile.FileName}";
                 var directoryPath = Path.Combine("client-app", "public", "images");
                 if (!Directory.Exists(directoryPath))
@@ -92,6 +106,7 @@ namespace CinemaApp.Controllers
             await _context.SaveChangesAsync();
             return Ok(imagePath);
         }
+
         [HttpPut]
         public async Task UpdateCinemaAsync(cinemaDto cinemaDto)
         {
@@ -116,10 +131,10 @@ namespace CinemaApp.Controllers
 
             if (!string.IsNullOrEmpty(cinema.ImagePath))
             {
-                var filePath = Path.Combine("client-app", "public", "images",cinema.ImagePath.TrimStart('/'));
-                if (System.IO.File.Exists(filePath))
+                var oldImagePath = Path.Combine("client-app", "public", cinema.ImagePath.TrimStart('/'));
+                if (System.IO.File.Exists(oldImagePath))
                 {
-                    System.IO.File.Delete(filePath);
+                    System.IO.File.Delete(oldImagePath);
                 }
             }
 

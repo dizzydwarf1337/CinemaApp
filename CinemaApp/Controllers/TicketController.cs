@@ -32,17 +32,26 @@ namespace CinemaApp.Controllers
         }
         [HttpGet("user/{id}")]
             public async Task<ICollection<ticketDto>> GetTicketsByUserIdAsync(Guid id)
-            {
+            { 
                 var tickets = await _context.Tickets.Where(x => x.UserId == id).ToListAsync();
                 var ticketDtos = new List<ticketDto>();
+                try
+                {
+
                 foreach (var ticket in tickets)
                 {
                     ticketDtos.Add(new ticketDto(ticket));
                 }
                 return ticketDtos;
-            }
+                }
+                catch (Exception e)
+                {
+                Console.WriteLine(tickets);
+                return null;
+                }
+        }
         [HttpPost]
-        public async Task CreateTicketAsync(ticketDto ticketdto)
+        public async Task<IActionResult> CreateTicketAsync(ticketDto ticketdto)
         {
             var ticket = new Ticket
             {
@@ -59,6 +68,7 @@ namespace CinemaApp.Controllers
             session.AvailibleSeats -= ticketdto.NumberOfSeats;
             await _context.Tickets.AddAsync(ticket);
             await _context.SaveChangesAsync();
+            return Ok(ticket.Id);
         }
         [HttpPut]
         public async Task UpdateTicketAsync(ticketDto ticketdto)

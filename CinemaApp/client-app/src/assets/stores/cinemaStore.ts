@@ -1,4 +1,4 @@
-import { makeAutoObservable} from "mobx";
+import { makeAutoObservable, runInAction} from "mobx";
 import cinema from "../models/cinema";
 import hall from "../models/hall";
 import session from "../models/session";
@@ -21,6 +21,21 @@ export default class CinemaStore  {
     movies: movie[] = [];
     movie: movie | null = null;
     loading = false;
+    createSnack = false;
+    deleteSnack = false;
+    updateSnack = false;
+    setUpdateSnack = (value: boolean) => {
+        this.updateSnack = value;
+    }
+    getUpdateSnack = () => this.updateSnack;
+    setCreateSnack = (value: boolean) => {
+        this.createSnack = value;
+    }
+    getCreateSnack = () => this.createSnack;
+    setDeleteSnack = (value: boolean) => {
+        this.deleteSnack = value;
+    }
+    getDeleteSnack = () => this.deleteSnack;
     setLoading(value: boolean) {
         this.loading = value;
     }
@@ -39,23 +54,24 @@ export default class CinemaStore  {
     }
     createCinema = async (cinemaDto: cinema,numOfHalls:Number,file?:File) => {
         this.setLoading(true);
-        console.log(cinemaDto, numOfHalls);
-        agent.Cinemas.createCinema(cinemaDto, numOfHalls).then(async (cinema) => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Cinemas.uploadImage(cinema.id, formData); } this.setCinemas([...this.cinemas, cinema]) })
+        agent.Cinemas.createCinema(cinemaDto, numOfHalls).then(async (cinema) => { this.setCreateSnack(true); if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Cinemas.uploadImage(cinema.id, formData); } })
             .catch((error) => { console.log("error while creating cinema: ", error) })
-            .finally(()=>this.setLoading(false));
+            .finally(async () => { await this.loadCinemas(); this.setLoading(false) });
+       
     }
     deleteCinema = async (id: string) => {
         this.setLoading(true);
-        agent.Cinemas.deleteCinema(id).then(() => { this.setCinemas(this.cinemas.filter(x => x.id !== id)) })
+        agent.Cinemas.deleteCinema(id).then(() => { this.setCinemas(this.cinemas.filter(x => x.id !== id)); this.setDeleteSnack(true); })
             .catch((error) => { console.log("error while deleting cinema: ", error) })
-            .finally(() => this.setLoading(false));
+            .finally(async () => { await this.loadCinemas(); this.setLoading(false) });
+        
     }
     updateCinema = async (cinema: cinema, file?:File) => {
         this.setLoading(true);
         cinema.imagePath = "";
-        agent.Cinemas.updateCinema(cinema).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file);  await agent.Cinemas.uploadImage(cinema.id, formData) }; this.setCinemas([...this.cinemas.filter(x => x.id !== cinema.id), cinema]) })
+        agent.Cinemas.updateCinema(cinema).then(async () => { this.setUpdateSnack(true); if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Cinemas.uploadImage(cinema.id, formData); } })
             .catch((error) => { console.log("error while updating cinema: ", error) })
-            .finally(() => this.setLoading(false));
+            .finally(async () => { await this.loadCinemas(); this.setLoading(false) });
     }
 
     getCinema = () => this.cinema;
@@ -78,19 +94,19 @@ export default class CinemaStore  {
     }
     createHall = async (hall: hall) => {
         this.setLoading(true);
-        agent.Halls.createHall(hall).then(() => { this.setHalls([...this.halls, hall]) })
+        agent.Halls.createHall(hall).then(() => { this.setHalls([...this.halls, hall]);  })
             .catch((error) => { console.log("error while creating hall: ", error) })
             .finally(() => { this.setLoading(false) });
     }
     deleteHall = async (id: string) => {
         this.setLoading(true);
-        agent.Halls.deleteHall(id).then(() => { this.setHalls(this.halls.filter(x => x.id !== id)) })
+        agent.Halls.deleteHall(id).then(() => { this.setHalls(this.halls.filter(x => x.id !== id));  })
             .catch((error) => { console.log("error while deleting hall: ", error) })
             .finally(() => { this.setLoading(false) });
     }
     updateHall = async (hall: hall) => {
         this.setLoading(true);
-        agent.Halls.updateHall(hall).then(() => { this.setHalls([...this.halls.filter(x => x.id !== hall.id), hall]) })
+        agent.Halls.updateHall(hall).then(() => { this.setHalls([...this.halls.filter(x => x.id !== hall.id), hall]); })
             .catch((error) => { console.log("error while updating hall: ", error) })
             .finally(() => { this.setLoading(false) });
     }
@@ -113,24 +129,24 @@ export default class CinemaStore  {
         agent.Movies.getMovies().then((movies) => { this.setMovies(movies);  })
             .catch((error) => { console.log("error while loading movies: ", error) });
     }
-    createMovie = async (movie: movie,file?:File) => {
+    createMovie = async (movieDto: movie,file?:File) => {
         this.setLoading(true);
-        
-        agent.Movies.createMovie(movie).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id,formData) }; this.setMovies([...this.movies, movie]) })
+        console.log("Updated Movie Duration:", movieDto.duration);
+        agent.Movies.createMovie(movieDto).then(async (movie) => { this.setCreateSnack(true); if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id, formData); } })
             .catch((error) => { console.log("error while creating movie: ", error) })
-            .finally(() => { this.setLoading(false) });
+            .finally(async () => { await this.loadMovies(); this.setLoading(false) });
     }
     deleteMovie = async (id: string) => {
         this.setLoading(true);
-        agent.Movies.deleteMovie(id).then(() => { this.setMovies(this.movies.filter(x => x.id !== id)) })
+        agent.Movies.deleteMovie(id).then(() => { this.setMovies(this.movies.filter(x => x.id !== id)); this.setDeleteSnack(true); })
             .catch((error) => { console.log("error while deleting movie: ", error) })
-            .finally(() => { this.setLoading(false) });
+            .finally(async () => { await this.loadMovies(); this.setLoading(false) });
     }
     updateMovie = async (movie: movie, file?:File) => {
         this.setLoading(true);
-        agent.Movies.updateMovie(movie).then(async () => { if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id, formData) }; this.setMovies([...this.movies.filter(x => x.id !== movie.id), movie]) })
+        agent.Movies.updateMovie(movie).then(async () => { this.setUpdateSnack(true);  if (file) { const formData = new FormData(); formData.append('formFile', file); await agent.Movies.uploadImage(movie.id, formData);} })
             .catch((error) => { console.log("error while updating movie: ", error) })
-            .finally(() => { this.setLoading(false) });
+            .finally(async () => { await this.loadMovies(); this.setLoading(false) });
     }
 
     setMovie = (movie: movie) => {
@@ -153,19 +169,19 @@ export default class CinemaStore  {
     }
     createSession = async (session: session) => {
         this.setLoading(true);
-        agent.Sessions.createSession(session).then(() => { this.setSessions([...this.sessions, session]) })
+        agent.Sessions.createSession(session).then(async () => { await this.loadSessions(); this.setCreateSnack(true); })
             .catch((error) => { console.log("error while creating session: ", error) })
             .finally(() => { this.setLoading(false) });
     }
     deleteSession = async (id: string) => {
         this.setLoading(true);
-        agent.Sessions.deleteSession(id).then(() => { this.setSessions(this.sessions.filter(x => x.id !== id)) })
+        agent.Sessions.deleteSession(id).then(() => { this.setSessions(this.sessions.filter(x => x.id !== id)); this.setDeleteSnack(true); })
             .catch((error) => { console.log("error while deleting session: ", error) })
             .finally(() => { this.setLoading(false) });
     }
     updateSession = async (session: session) => {
         this.setLoading(true);
-        agent.Sessions.updateSession(session).then(() => { this.setSessions([...this.sessions.filter(x => x.id !== session.id), session]) })
+        agent.Sessions.updateSession(session).then(() => { this.setSessions([...this.sessions.filter(x => x.id !== session.id), session]); this.setUpdateSnack(true); })
             .catch((error) => { console.log("error while updating session: ", error) })
             .finally(() => { this.setLoading(false) });
     }

@@ -4,7 +4,7 @@ export default interface Ticket {
     seat: string,
     status: string,
     price: number,
-    Created: Date,
+    created: Date,
     numberOfSeats: number,
     userId:string
 }

@@ -35,7 +35,7 @@ export default observer(function MovieDetails() {
                             <Box sx={{
                                 borderRadius: "15px",
                                 boxShadow:"2px 2px 2px grey",
-                                backgroundImage: movie?.imagePath ? `url(${movie.imagePath})` : 'url(/absoluteCinema.jpg)', width: "500px", height: "400px", backgroundSize: "cover",
+                                backgroundImage: movie?.imagePath ? `url(${movie.imagePath})` : 'url(/absoluteCinema.jpg)', width: "500px", height: "700px", backgroundSize: "cover",
                                 backgroundPosition: "center",
                                 backgroundRepeat: 'no-repeat',
                                 }} />
@@ -44,11 +44,12 @@ export default observer(function MovieDetails() {
                             <Typography variant="h2" color="primary">{movie?.title}</Typography>
                             <Box display="flex" flexDirection="row" alignItems="center" gap="20px">
                                 <Typography variant="h3" color="secondary" sx={{ textShadow:"1px 1px 1px #1a202c"} } >{movie?.genre}</Typography>
-                                <Typography variant="h3" color="secondary" sx={{ textShadow:"1px 1px 1px #1a202c"} } >{movie?.duration}</Typography>
+                                
                             </Box>
                             <Box>
                                 <Typography variant="h6" color="primary">{movie?.description}</Typography>
                                 <Typography variant="h6" color="secondary" sx={{ textShadow: "1px 1px 1px #1a202c" }}>By {movie?.director}</Typography>
+                                <Typography variant="h6" color="secondary" sx={{ textShadow: "1px 1px 1px #1a202c" }} >{movie?.duration}</Typography>
                             </Box>
                         </Box>
                     </Box>

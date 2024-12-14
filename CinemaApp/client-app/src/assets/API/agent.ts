@@ -29,7 +29,7 @@ const Auth = {
 const Users = {
     getUserById: (id: string) => requests.get<user>(`/user/${id}`),
     getUserByUserName: (userName: Object) => requests.post<user>('/user/userName/', { userName }),
-    createUser: (user: user) => requests.post<void>('/user/createUser', user),
+    createUser: (user: user) => requests.post<void>('/user', user),
     deleteUser: (id: string) => requests.delete<void>(`/user/${id}`),
     updateUser: (user: user) => requests.put<void>(`/user/${user.id}`, user),
 };

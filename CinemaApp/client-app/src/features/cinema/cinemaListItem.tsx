@@ -1,45 +1,73 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader,Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader,Typography } from "@mui/material";
 import cinema from "../../assets/models/cinema";
 import { useStore } from "../../assets/stores/store";
+import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router";
+import CustomSnackbar from "../../assets/layout/CustomSnackBar";
 
 
 interface Props {
     cinema: cinema;
 }
 
-export default function cinemaListItem({cinema}:Props){
+export default observer(function cinemaListItem({cinema}:Props){
 
-    const { userStore } = useStore();
-
+    const { userStore,cinemaStore } = useStore();
+    const navigate = useNavigate();
      return (
-        <>
-             <Box width="100%" height="100%">
+         <>
+             <Box width="100%" height="100%" onClick={() => { navigate(`/cinema/${cinema.id}`) }} sx={{ cursor: "pointer" }}>
                  <Card sx={{
                      backgroundImage: cinema.imagePath ? `url(${cinema.imagePath})` : 'url(/absoluteCinema.jpg)',
                      backgroundSize: "cover",
                      backgroundPosition: "center",
-                     backgroundRepeat: 'no-repeat' ,
+                     backgroundRepeat: 'no-repeat',
                      height: "400px",
                      width: "310px",
-                     borderRadius:"15px"
+                     borderRadius: "15px",
+                     position: 'relative', 
                  }}>
-                     <CardHeader sx={{ color: "#f4b400", textShadow:"2px 2px #1a202c" }} title={cinema.name}></CardHeader>
-
-                     <CardContent sx={{ color: 'white', mt: userStore.user?.role==='admin' ? "215   px" : "270px" }}>
+                     <CardHeader
+                         sx={{
+                             position: 'absolute',
+                             top: '0px', 
+                             left: '10px',
+                             color: "white",
+                             textShadow: "2px 2px 2px red",
+                            
+                         }}
+                         title={cinema.name}
+                     />
+                     <CardContent sx={{
+                         position: 'absolute',
+                         bottom: '0px',
+                         left: '10px', 
+                         right: '10px',
+                         color: '#ffb400',
+                     }}>
                          <Box display="flex" flexDirection="column">
-                             <Typography sx={{ color:"#f4b400", textShadow:"1px 1px  #1a202c"}}>{cinema.address}</Typography>
+                             <Typography sx={{ color: "white", textShadow: "2px 2px 2px red" }}>
+                                 {cinema.address}
+                             </Typography>
                          </Box>
                      </CardContent>
-                     {userStore.user?.role === 'admin' ? (
-                         <CardActions>
-                             <Button variant="contained" color="error">Delete</Button>
-                             <Button variant="contained" color="warning">Edit</Button>
-                         </CardActions>
-                     ) : null
-                    }
-                    
-                </Card>
-            </Box>
+                 </Card>
+
+                 {userStore.user?.role === 'admin' && (
+                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt:"5px",mr:"7px", gap:"10px" }}>
+                         <Button variant="contained" onClick={(e) => { e.stopPropagation(); navigate(`/cinema/manage/${cinema.id}`) }} color="warning">Edit</Button>
+                         <Button variant="contained" onClick={(e) => { e.stopPropagation(); cinemaStore.deleteCinema(cinema.id) }} color="error">Delete</Button>
+                     </Box>
+                 )}
+             </Box>
+             <CustomSnackbar
+                 message="Cinema deleted"
+                 open={cinemaStore.getDeleteSnack()}
+                 autoHideDuration={3000}
+                 key="DeleteSnackBar"
+                 severity="error"
+                 onClose={() => cinemaStore.setDeleteSnack(false)}
+             />
         </>
     )
-}
+})

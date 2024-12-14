@@ -65,6 +65,24 @@ export default observer(function SessionList() {
         <Box display="flex" flexDirection="column" gap="10px">
             <Box display="flex" flexDirection="row" borderRadius="8px" justifyContent="space-evenly" sx={{ boxShadow: "2px 2px 2px 2px grey", p: "20px", backgroundColor: "#DEDFDF", alignItems: "center" }}>
                 <Typography variant="body1" color="black">Filters:</Typography>
+                <Box>
+                    <FormControl>
+                        <Box display="flex" flexDirection="row" width="170px">
+                            <TextField
+                                value={selectedMovie}
+                                onChange={handleChangeMovie}
+                                id="movie-select"
+                                label="Movie"
+                                placeholder="Find Movie"
+                                sx={{
+                                    '& .MuiInputBase-input': {
+                                        color: 'black'
+                                    }
+                                }}
+                            />
+                        </Box>
+                    </FormControl>
+                </Box>
                 <Box display="flex" flexDirection="row" gap="10px" justifyContent="flex-start">
                     <FormControl>
                         <Box display="flex" flexDirection="row" width="170px">
@@ -127,24 +145,7 @@ export default observer(function SessionList() {
                         </Box>
                     </FormControl>
                 </Box>
-                <Box>
-                    <FormControl>
-                        <Box display="flex" flexDirection="row" width="170px">
-                            <TextField
-                                value={selectedMovie}
-                                onChange={handleChangeMovie}
-                                id="movie-select"
-                                label="Movie"
-                                placeholder="Select Movie"
-                                sx={{
-                                    '& .MuiInputBase-input': {
-                                        color: 'black'
-                                    }
-                                }}
-                            />
-                        </Box>
-                    </FormControl>
-                </Box>
+                
             </Box>
             {filteredSessions.map(session => (
                 <Box key={session.id}>

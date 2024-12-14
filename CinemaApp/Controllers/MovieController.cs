@@ -33,7 +33,7 @@ namespace CinemaApp.Controllers
             return moviedto;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateMovieAsync([FromForm] movieDto movieDto)
+        public async Task<IActionResult> CreateMovieAsync(movieDto movieDto)
         {
             string? imagePath = null;
             var movie = new Movie
@@ -41,7 +41,7 @@ namespace CinemaApp.Controllers
                 Id = Guid.NewGuid(),
                 Title = movieDto.Title,
                 Description = movieDto.Description,
-                Duration = movieDto.Duration,
+                Duration = TimeOnly.Parse(movieDto.Duration),
                 Genre = movieDto.Genre,
                 Director = movieDto.Director,
                 ImagePath = imagePath 
@@ -53,15 +53,31 @@ namespace CinemaApp.Controllers
             return Ok(movie);
         }
         [HttpPut("{id}")]
-        public async Task UploadImage(Guid id, IFormFile formFile)
+        public async Task UploadImage(Guid id, IFormFile? formFile)
         {
             var movie = await _context.Movies.FindAsync(id);
-            
+
             string? imagePath = null;
+
             if (formFile != null)
             {
+                if (!string.IsNullOrEmpty(movie.ImagePath))
+                {
+                    var oldImagePath = Path.Combine("client-app", "public", movie.ImagePath.TrimStart('/'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
                 var fileName = $"{Guid.NewGuid()}_{formFile.FileName}";
-                var filePath = Path.Combine("wwwroot", "images", fileName);
+                var directoryPath = Path.Combine("client-app", "public", "images");
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var filePath = Path.Combine(directoryPath, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -69,9 +85,10 @@ namespace CinemaApp.Controllers
                 }
 
                 imagePath = $"/images/{fileName}";
-                movie.ImagePath=imagePath;
+                movie.ImagePath = imagePath;
             }
             await _context.SaveChangesAsync();
+
         }
         [HttpPut]
         public async Task UpdateMovieAsync(movieDto movieDto)
@@ -84,7 +101,7 @@ namespace CinemaApp.Controllers
 
             movie.Title = movieDto.Title;
             movie.Description = movieDto.Description;
-            movie.Duration = movieDto.Duration;
+            movie.Duration = TimeOnly.Parse(movieDto.Duration);
             movie.Genre = movieDto.Genre;
             movie.Director = movieDto.Director;
             _context.Movies.Update(movie);
@@ -101,10 +118,10 @@ namespace CinemaApp.Controllers
 
             if (!string.IsNullOrEmpty(movie.ImagePath))
             {
-                var filePath = Path.Combine("wwwroot", movie.ImagePath.TrimStart('/'));
-                if (System.IO.File.Exists(filePath))
+                var oldImagePath = Path.Combine("client-app", "public", movie.ImagePath.TrimStart('/'));
+                if (System.IO.File.Exists(oldImagePath))
                 {
-                    System.IO.File.Delete(filePath);
+                    System.IO.File.Delete(oldImagePath);
                 }
             }
 

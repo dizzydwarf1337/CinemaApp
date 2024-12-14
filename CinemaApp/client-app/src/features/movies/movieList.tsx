@@ -6,8 +6,8 @@ import MovieListItem from "./movieListItem";
 export default observer(function MovieList() {
     const { cinemaStore } = useStore();
 ;    return (
-        <>
-            <Box display="grid" gridTemplateColumns="auto auto auto auto" gap="10px">
+    <>
+        <Box display="grid" gridTemplateColumns="auto auto auto auto" rowGap="30px" columnGap="20px">
                 {cinemaStore.movies.map(movie => (
                     <Box key={movie.id}>
                         <MovieListItem movie={movie} />

@@ -4,6 +4,7 @@ const theme = createTheme({
     palette: {
         primary: {
             main: '#1a202c', //  Raisin black (blue)
+            light: "#667FB1"
         },
         secondary: {
             main: '#f4b400', //  Selective yellow
@@ -49,12 +50,25 @@ const theme = createTheme({
                     backgroundColor: "#619129",
 
                     '&:hover': {
-                        backgroundColor:"#74AC33",
+                        backgroundColor: "#74AC33",
                     }
                 }
             },
-        }
-    },
+        },
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+
+                    '& .MuiInputBase-input': {
+                        color: 'black',
+                    },
+                    '& .MuiFormLabel-root': {
+                        color: 'black',
+                    },
+                },
+            },
+        },
+    }
 });
 
 export default theme;

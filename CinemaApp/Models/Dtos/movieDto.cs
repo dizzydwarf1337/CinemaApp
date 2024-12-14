@@ -9,7 +9,7 @@ namespace CinemaApp.Models.Dtos
         public string Description { get; set; }
         public string Genre { get; set; }
         public string Director { get; set; }
-        public TimeOnly Duration { get; set; }
+        public string Duration { get; set; }
         public string ImagePath { get; set; }
         public movieDto(Movie movie) 
         {
@@ -19,7 +19,7 @@ namespace CinemaApp.Models.Dtos
             this.Genre = movie.Genre;
             this.Director = movie.Director;
             this.ImagePath = movie.ImagePath;
-            this.Duration = movie.Duration;
+            this.Duration = movie.Duration.ToString();
         }
         public movieDto() { }
     }
