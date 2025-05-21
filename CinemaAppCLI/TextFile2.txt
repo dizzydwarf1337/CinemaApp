@@ -2422,4 +2422,4 @@ class Program
         AnsiConsole.MarkupLine("[bold red]Użytkownik został pomyślnie usunięty![/]");
     }
 
-}
+a 
