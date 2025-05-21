@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="CinemaAppWPF.Views.HallsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Text="Sale kinowe" FontWeight="Bold" FontSize="16"/>
+            <DataGrid AutoGenerateColumns="False" Height="300">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Numer sali" Binding="{Binding Number}"/>
+                    <DataGridTextColumn Header="Liczba miejsc" Binding="{Binding Seats}"/>
+                    <DataGridTextColumn Header="Kino" Binding="{Binding CinemaName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="Dodaj"/>
+                <Button Content="Edytuj" Margin="10,0,0,0"/>
+                <Button Content="Usuń" Margin="10,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
