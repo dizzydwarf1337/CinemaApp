@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CinemaAppWPF.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace CinemaAppWPF.Views
         public MoviesView()
         {
             InitializeComponent();
+            var movieService = new MovieService();
+            DataContext = new ViewModels.MoviesViewModel(movieService);
         }
     }
 }

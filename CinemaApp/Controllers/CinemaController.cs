@@ -32,7 +32,7 @@ namespace CinemaApp.Controllers
             return new cinemaDto(cinema);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCinemaAsync(CreateCinemaRequest request)
+        public async Task<IActionResult> CreateCinemaAsync([FromBody]CreateCinemaRequest request)
         {
             string? imagePath = null;
             var cinema = new Cinema

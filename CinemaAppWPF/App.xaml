@@ -1,9 +1,13 @@
 ﻿<Application x:Class="CinemaAppWPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CinemaAppWPF"
+             xmlns:conv="clr-namespace:CinemaAppWPF.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+            <conv:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter" Role="Admin"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

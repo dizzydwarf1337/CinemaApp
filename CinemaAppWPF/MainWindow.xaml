@@ -17,7 +17,7 @@
             <MenuItem Header="Kina" Command="{Binding ShowCinemasCommand}" />
             <MenuItem Header="Sale" Command="{Binding ShowHallsCommand}" />
             <MenuItem Header="Użytkownicy" Command="{Binding ShowUsersCommand}" />
-            <MenuItem Header="Wyloguj" Command="{Binding LogoutCommand}" />
+            <MenuItem Header="Logowanie" Command="{Binding LogoutCommand}" />
         </Menu>
 
         <ContentControl Content="{Binding CurrentView}" />
