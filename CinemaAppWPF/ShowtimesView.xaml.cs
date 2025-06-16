@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CinemaAppWPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,15 @@ namespace CinemaAppWPF.Views
 {
     public partial class ShowtimesView : UserControl
     {
-        public ShowtimesView()
-        {
-            InitializeComponent();
-        }
+            public ShowtimesView()
+            {
+                InitializeComponent();
+
+                DataContext = new ShowtimesViewModel(session =>
+                {
+                    var window = new SessionAddEditWindow(session);
+                    return window.ShowDialog();
+                });
+            }
     }
 }

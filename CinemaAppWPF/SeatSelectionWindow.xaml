@@ -1,0 +1,42 @@
+﻿<Window x:Class="CinemaAppWPF.SeatSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaAppWPF"
+        mc:Ignorable="d"
+              Title="Select Your Seat" Height="250" Width="350">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Choose Your Seat" FontWeight="Bold" FontSize="18" Foreground="#333" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Row:" VerticalAlignment="Center" Margin="0 0 10 0" FontSize="14"/>
+        <ComboBox Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding Rows}"
+                  SelectedItem="{Binding SelectedRow}"
+                  Width="120" HorizontalAlignment="Left"
+                  FontSize="14" Padding="5"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Number:" VerticalAlignment="Center" Margin="0 15 10 0" FontSize="14"/>
+        <ComboBox Grid.Row="2" Grid.Column="1"
+                  ItemsSource="{Binding Numbers}"
+                  SelectedItem="{Binding SelectedNumber}"
+                  Width="120" HorizontalAlignment="Left" Margin="0 15 0 0"
+                  FontSize="14" Padding="5"/>
+
+        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Proceed to Purchase"
+                Command="{Binding ProceedToPurchaseCommand}"
+                Margin="0 30 0 0" Padding="10 5" Background="#4CAF50" Foreground="White" BorderThickness="0" Cursor="Hand"
+                HorizontalAlignment="Center" Width="180"/>
+    </Grid>
+</Window>

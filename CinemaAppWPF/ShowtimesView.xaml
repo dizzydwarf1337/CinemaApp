@@ -1,23 +1,62 @@
 ﻿<UserControl x:Class="CinemaAppWPF.Views.ShowtimesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="10">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CinemaAppWPF.Views"
+             xmlns:vm="clr-namespace:CinemaAppWPF.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <vm:ShowtimesViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="20" Background="#F7F9FC">
         <StackPanel>
-            <TextBlock Text="Seanse" FontWeight="Bold" FontSize="16"/>
-            <DataGrid AutoGenerateColumns="False" Height="300">
+            <TextBlock Text="Session Management" FontWeight="Bold" FontSize="22" Foreground="#333" Margin="0 0 0 15"/>
+
+            <DataGrid ItemsSource="{Binding Sessions}"
+                      SelectedItem="{Binding SelectedSession, Mode=TwoWay}"
+                      AutoGenerateColumns="False"
+                      Height="350"
+                      IsReadOnly="True"
+                      CanUserAddRows="False" CanUserDeleteRows="False"
+                      GridLinesVisibility="None" RowBackground="#FFF" AlternatingRowBackground="#F0F4FA"
+                      BorderBrush="#DDD" BorderThickness="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Film" Binding="{Binding MovieTitle}"/>
-                    <DataGridTextColumn Header="Data" Binding="{Binding Date}"/>
-                    <DataGridTextColumn Header="Godzina" Binding="{Binding Time}"/>
-                    <DataGridTextColumn Header="Sala" Binding="{Binding Hall}"/>
-                    <DataGridTextColumn Header="Cena" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Session ID" Binding="{Binding Id}" Width="Auto"/>
+                    <DataGridTextColumn Header="Movie Title" Binding="{Binding MovieTitle}" Width="*"/>
+                    <DataGridTextColumn Header="Hall Number" Binding="{Binding HallNumber}" Width="Auto"/>
+                    <DataGridTextColumn Header="Date and Time" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="*"/>
+                    <DataGridTextColumn Header="Ticket Price" Binding="{Binding TicketPrice, StringFormat='{}{0:C}'}" Width="*"/>
+                    <DataGridTextColumn Header="Available Seats" Binding="{Binding AvailibleSeats}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Button Content="Dodaj"/>
-                <Button Content="Edytuj" Margin="10,0,0,0"/>
-                <Button Content="Usuń" Margin="10,0,0,0"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Right">
+                <Button Content="Add Session" Width="80" Margin="0,0,10,0" Padding="5" Background="#4CAF50" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Command="{Binding AddCommand}"
+                        Visibility="{Binding CurrentUserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Admin'}"/>
+
+                <Button Content="Edit Session" Width="80" Margin="0,0,10,0" Padding="5" Background="#2196F3" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Command="{Binding EditCommand}"
+                        Visibility="{Binding CurrentUserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Manager'}"/>
+
+                <Button Content="Delete Session" Width="80" Padding="5" Background="#F44336" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Command="{Binding DeleteCommand}"
+                        Visibility="{Binding CurrentUserRole, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Admin'}"/>
+
+                <Button Content="Buy Ticket" Width="80" Margin="10,0,0,0" Padding="5" Background="#007ACC" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Command="{Binding BuyTicketCommand}"/>
+                
+                <Button Content="Refresh" Command="{Binding LoadSessionsCommand}" Width="80" Margin="10,0,0,0" Padding="5" Background="#607D8B" Foreground="White" BorderThickness="0" Cursor="Hand"/>
             </StackPanel>
         </StackPanel>
+
+        <StatusBar VerticalAlignment="Bottom" Margin="0,10,0,0" Background="#E0E0E0">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Sessions.Count, StringFormat='Total Sessions: {0}'}" Foreground="#555"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </UserControl>
