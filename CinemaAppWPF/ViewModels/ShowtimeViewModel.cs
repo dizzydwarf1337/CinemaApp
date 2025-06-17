@@ -21,6 +21,7 @@ namespace CinemaAppWPF.ViewModels
         private readonly HallService _hallService;
         private readonly TicketService _ticketService;
         private readonly UserSession _userSession;
+        private readonly CinemaService _cinemaService;
         private readonly Func<sessionDto, bool?> _showSessionAddEditWindow;
 
         public ShowtimesViewModel(Func<sessionDto, bool?> showSessionAddEditWindow)
@@ -29,6 +30,7 @@ namespace CinemaAppWPF.ViewModels
             _movieService = new MovieService();
             _hallService = new HallService();
             _ticketService = new TicketService();
+            _cinemaService = new CinemaService();
             _showSessionAddEditWindow = showSessionAddEditWindow;
             _userSession = UserSession.Instance;
 
@@ -86,15 +88,16 @@ namespace CinemaAppWPF.ViewModels
                 var sessions = await _sessionService.GetSessionsAsync();
                 var movies = await _movieService.GetMoviesAsync();
                 var halls = await _hallService.GetHallsAsync();
-
+                var cinemas = await _cinemaService.GetCinemasAsync();
                 var movieDict = movies.ToDictionary(m => m.Id);
                 var hallDict = halls.ToDictionary(h => h.Id);
-
+                var cinemaDict = cinemas.ToDictionary(x => x.Id);
                 foreach (var session in sessions)
                 {
                     movieDict.TryGetValue(session.MovieId, out MovieDto movie);
                     hallDict.TryGetValue(session.HallId, out hallDto hall);
-
+                    cinemaDict.TryGetValue(hall.CinemaId, out CinemaDto cinema);
+                    session.CinemaName = cinema.Name ?? "UnknownCinema";
                     session.MovieTitle = movie?.Title ?? "Unknown Movie";
                     session.HallNumber = hall?.Number ?? "Unknown Hall";
                 }
@@ -189,20 +192,19 @@ namespace CinemaAppWPF.ViewModels
                 return;
             }
 
-            // Open the SeatSelectionWindow
             var seatSelectionWindow = new SeatSelectionWindow(SelectedSession);
             bool? dialogResult = seatSelectionWindow.ShowDialog();
 
             if (dialogResult == true)
             {
                 string selectedSeat = seatSelectionWindow.GetSelectedSeat();
-                int numberOfTicketsToBuy = 1; // Always 1 for single seat selection
+                int numberOfTicketsToBuy = 1; 
 
                 var newTicket = new ticketDto
                 {
-                    SessionId = Guid.Parse(SelectedSession.Id.ToString()), // Adjust if Session.Id is not Guid
+                    SessionId = Guid.Parse(SelectedSession.Id.ToString()), 
                     Seat = selectedSeat,
-                    Price = (double)SelectedSession.TicketPrice, // Price for one ticket
+                    Price = (double)SelectedSession.TicketPrice,
                     Status = "Confirmed",
                     Created = DateTime.UtcNow,
                     NumberOfSeats = numberOfTicketsToBuy,
@@ -213,7 +215,7 @@ namespace CinemaAppWPF.ViewModels
                 {
                     Guid createdTicketId = await _ticketService.CreateTicketAsync(newTicket);
                     MessageBox.Show($"Ticket purchased successfully! Ticket ID: {createdTicketId}\nSeat: {selectedSeat}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    await LoadSessionsAsync(); // Refresh sessions to update available seats
+                    await LoadSessionsAsync(); 
                 }
                 catch (HttpRequestException ex)
                 {
@@ -226,7 +228,7 @@ namespace CinemaAppWPF.ViewModels
             }
             else
             {
-                // User cancelled seat selection
+                
                 MessageBox.Show("Seat selection cancelled.", "Cancelled", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

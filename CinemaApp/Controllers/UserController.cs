@@ -31,7 +31,7 @@ namespace CinemaApp.Controllers
             return new userDto(user);
         }
         [HttpPost]
-        public async Task CreateUserAsync(userDto userdto)
+        public async Task<IActionResult> CreateUserAsync([FromBody]userDto userdto)
         {
             var user = new User
             {
@@ -42,8 +42,11 @@ namespace CinemaApp.Controllers
                 Name = userdto.Name,
                 LastName = userdto.LastName
             };
+            
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            return Ok(new { Message = "Registration successful!", Success=true }); 
+
         }
         [HttpPut]
         public async Task UpdateUserAsync(userDto userdto)

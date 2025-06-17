@@ -20,6 +20,8 @@ namespace CinemaAppWPF.DTO
 
         [JsonIgnore]
         public string HallNumber { get; set; }
+        [JsonIgnore]
+        public string CinemaName { get; set; }
         public sessionDto() { }
 
     }

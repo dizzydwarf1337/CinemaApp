@@ -16,7 +16,6 @@
             <MenuItem Header="Bilety" Command="{Binding ShowTicketsCommand}" />
             <MenuItem Header="Kina" Command="{Binding ShowCinemasCommand}" />
             <MenuItem Header="Sale" Command="{Binding ShowHallsCommand}" />
-            <MenuItem Header="Użytkownicy" Command="{Binding ShowUsersCommand}" />
             <MenuItem Header="Logowanie" Command="{Binding LogoutCommand}" />
         </Menu>
 

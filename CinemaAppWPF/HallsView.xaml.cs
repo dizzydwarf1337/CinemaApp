@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using CinemaAppWPF.Services;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CinemaAppWPF.Views
 {
@@ -19,6 +8,10 @@ namespace CinemaAppWPF.Views
         public HallsView()
         {
             InitializeComponent();
+            // Instantiate services and pass them to the ViewModel
+            var hallService = new HallService();
+            var cinemaService = new CinemaService(); // CinemaService is still needed for mapping CinemaId to CinemaName for display
+            DataContext = new ViewModels.HallsViewModel(hallService, cinemaService);
         }
     }
 }

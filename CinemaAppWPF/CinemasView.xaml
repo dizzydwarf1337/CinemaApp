@@ -10,6 +10,7 @@
                       GridLinesVisibility="None" RowBackground="#FFF" AlternatingRowBackground="#F0F4FA"
                       BorderBrush="#DDD" BorderThickness="1" >
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="*" />
                     <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}" Width="*" />
                     <DataGridTextColumn Header="Adres" Binding="{Binding Address}" Width="2*" />
                 </DataGrid.Columns>

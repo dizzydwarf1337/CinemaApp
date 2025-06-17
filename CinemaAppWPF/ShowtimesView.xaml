@@ -24,7 +24,7 @@
                       GridLinesVisibility="None" RowBackground="#FFF" AlternatingRowBackground="#F0F4FA"
                       BorderBrush="#DDD" BorderThickness="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Session ID" Binding="{Binding Id}" Width="Auto"/>
+                    <DataGridTextColumn Header="Cinema" Binding="{Binding CinemaName}" Width="Auto"/>
                     <DataGridTextColumn Header="Movie Title" Binding="{Binding MovieTitle}" Width="*"/>
                     <DataGridTextColumn Header="Hall Number" Binding="{Binding HallNumber}" Width="Auto"/>
                     <DataGridTextColumn Header="Date and Time" Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="*"/>

@@ -36,7 +36,6 @@ namespace CinemaAppWPF.ViewModels
             ShowTicketsCommand = new RelayCommand(_ => CurrentView = new TicketsView());
             ShowCinemasCommand = new RelayCommand(_ => CurrentView = new CinemasView());
             ShowHallsCommand = new RelayCommand(_ => CurrentView = new HallsView());
-            ShowUsersCommand = new RelayCommand(_ => CurrentView = new UsersView());
             LogoutCommand = new RelayCommand(_ => CurrentView = new LoginView()); // reset widoku na logout
         }
 

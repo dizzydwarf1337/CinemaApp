@@ -18,19 +18,34 @@ namespace CinemaAppWPF.Views
 {
     public partial class LoginView : UserControl
     {
-        private readonly LoginViewModel _viewModel;
-
         public LoginView()
         {
             InitializeComponent();
-            _viewModel = new LoginViewModel();
-            DataContext = _viewModel;
+            // DataContext is set in XAML, so no need to set it here.
+            // If you did set it here, ensure it's not duplicated:
+            // DataContext = new LoginViewModel();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Password = PasswordBox.Password;
-            _ = _viewModel.LoginCommand.ExecuteAsync(null);
+            if (DataContext is LoginViewModel viewModel)
+            {
+                // Set the password from the PasswordBox to the ViewModel property
+                viewModel.Password = LoginPasswordBox.Password;
+                await viewModel.LoginCommand.ExecuteAsync(null); // Execute the command
+            }
+        }
+
+        // Event handler for the Register button (New)
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is LoginViewModel viewModel)
+            {
+                // Set the passwords from the PasswordBoxes to the ViewModel properties
+                viewModel.RegisterPassword = RegisterPasswordBox.Password;
+                viewModel.RegisterConfirmPassword = RegisterConfirmPasswordBox.Password;
+                await viewModel.RegisterCommand.ExecuteAsync(null); // Execute the registration command
+            }
         }
     }
 }
